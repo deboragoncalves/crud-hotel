@@ -1,0 +1,19 @@
+<div class="container">
+    <p class="title">Consultas</p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th class="table-row">Nome</th>
+                <th class="table-row">Documento</th>
+                <th class="table-row">Valor gasto (R$)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let data of dataList"> 
+                <td class="table-row">{{ data.name }}</td>
+                <td class="table-row">{{ data.document }}</td>
+                <td class="table-row">R$ {{ data.value }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

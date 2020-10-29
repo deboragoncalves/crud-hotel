@@ -14,6 +14,12 @@
     .container-inputs
         display: flex
 
+        @media (max-width: 1050px) 
+            display: flex
+            flex-direction: column
+            align-items: center
+        
+    
     .container-input
         display: flex
         flex-direction: column
@@ -29,6 +35,10 @@
         border: 1px solid #99A3A4
         width: 450px
         padding: 10px
+
+        @media (max-width: 600px) 
+            width: auto
+            padding: 10px
     
     .labels
         padding: 5px 0px

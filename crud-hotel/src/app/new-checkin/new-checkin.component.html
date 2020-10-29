@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container-checkin">
     <p class="title">Novo check in</p>
     <div class="container-form">
         <form (ngSubmit)="onSubmit($event)">
@@ -18,11 +18,13 @@
                     <input type="text" id="person" name="person" value="person" class="input">
                 </div>
                 <div class="container-checkbox">
-                    <input type="checkbox" id="car" name="car" value="have-car"> 
-                    <label for="car">Possui veículo</label>
+                    <input type="checkbox" id="car" name="car" value="have-car" class="input-checkbox"> 
+                    <label class="labels" for="car">Possui veículo</label>
                 </div>
             </div>
-            <button>Salvar</button>
+            <div class="container-button">
+                <button>Salvar</button>
+            </div>
         </form>
     </div>
 </div>

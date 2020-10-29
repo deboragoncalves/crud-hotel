@@ -1,4 +1,4 @@
-.container 
+.container-list 
     margin: 10px
     font-family: Arial
     border: solid 1px #2E86C1
@@ -10,39 +10,117 @@
         padding: 12px
         margin: 0
         font-size: 15px
+    
+    .title-filter
+        margin: 15px
+        font-size: 14px
 
     .container-filter
         margin: 15px
         width: 100%
         font-size: 14px
+        display: flex
+
+        @media (max-width: 500px)
+            flex-direction: column
+
+        @media (max-width: 200px)
+            font-size: 12px
+            width: 75%
+    
+    .container-input
+        display: flex
     
     .input
         margin-right: 5px
 
+        @media (max-width: 500px)
+            margin: 10px 0px
+
     .not-present
         margin-left: 25px
 
+        @media (max-width: 500px)
+            margin-left: 0px
+    
+    .labels
+        @media (max-width: 500px)
+            margin: 8px 10px
+
+    .container-table
+
+        @media (max-width: 320px)
+            min-width: 100%
+            font-size: 12px
+
+        @media (max-width: 160px)
+            max-width: 50%
+            font-size: 12px
+    
     .table 
         width: 100%
         padding: 15px
 
-        @media (max-width: 400px)
-            width: auto
+        @media (max-width: 160px)
+            padding: 0px
+            margin: 0
+            max-width: 50%
 
+    tr
+        @media (max-width: 320px)
+            margin: 0
+            display: block
+            float: left
+            min-width: 100%
+        
+        @media (max-width: 160px)
+            max-width: 50%
+            margin: 0
+            font-size: 12px
+    
     th
         border-bottom: 2px solid #99A3A4
         border-collapse: collapse
 
+        @media (max-width: 320px)
+            margin: 0
+            display: block
+            min-width: 100%
+
+        @media (max-width: 160px)
+            max-width: 50%
+            font-size: 12px
+            margin: 0
+
     td
         border-bottom: 1px solid #99A3A4
         border-collapse: collapse
+
+        @media (max-width: 320px)
+            margin: 0
+            display: block
+            min-width: 100%
+
+        @media (max-width: 160px)
+            max-width: 50%
+            font-size: 12px
+            margin: 0
     
     tr:last-child td
         border-bottom: 0px
+
+        @media (max-width: 320px)
+            border-bottom: 1px solid #99A3A4
     
     .table-row
         text-align: left
         padding: 8px
+
+    .buttons
+        @media (max-width: 170px)
+            display: flex
+            flex-direction: column
+            justify-content: center       
 
     .button
         border: 1px solid #2E86C1
@@ -55,10 +133,15 @@
     
     .button.previous
         margin-left: 15px
-    
+
+        @media (max-width: 170px)
+            margin: 10px
+
     .button.next 
         margin-left: 15px
 
+        @media (max-width: 160px)
+            margin: 10px
     i
         color: #2E86C1
 

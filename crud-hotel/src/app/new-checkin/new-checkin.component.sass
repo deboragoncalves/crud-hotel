@@ -1,4 +1,4 @@
-.container 
+.container-checkin
     margin: 10px
     font-family: Arial
     border: solid 1px #2E86C1
@@ -18,17 +18,26 @@
             display: flex
             flex-direction: column
             align-items: center
-        
+            margin: 0px 15px
     
     .container-input
         display: flex
         flex-direction: column
         margin: 15px
+
+        @media (max-width: 1050px)
+            margin: 10px 15px
+        
+        @media (max-width: 260px)
+            width: 80%
     
     .container-checkbox
         display: flex
         align-items: center
         margin: 30px 15px 0px 15px
+
+        @media (max-width: 1050px)
+            margin-top: 10px
 
     .input
         border-radius: 5px
@@ -40,8 +49,19 @@
             width: auto
             padding: 10px
     
+    .input-checkbox
+        margin: 0px 10px
+    
     .labels
         padding: 5px 0px
+
+        @media (max-width: 260px)
+            font-size: 12px
+
+    .container-button
+        @media (max-width: 1050px)
+            display: flex
+            justify-content: center
 
     button
         color: white

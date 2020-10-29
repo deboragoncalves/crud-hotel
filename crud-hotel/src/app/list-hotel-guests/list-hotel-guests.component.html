@@ -1,11 +1,15 @@
-<div class="container">
+<div class="container-list">
     <p class="title">Consultas</p>
+    <p class="title-filter">Filtrar por:</p>
     <div class="container-filter">
-        <p class="title-filter">Filtrar por:</p>
-        <input type="radio" id="present" name="present" value="people-present" class="input">
-        <label for="present">Pessoas ainda presentes</label>
-        <input type="radio" id="not-present" name="not-present" value="people-not-present" class="input not-present"> 
-        <label for="not-present">Pessoas que já deixaram o hotel</label>
+        <div class="container-input">
+            <input type="radio" id="present" name="present" value="people-present" class="input">
+            <label class="labels" for="present">Pessoas ainda presentes</label>
+        </div>
+        <div class="container-input">
+            <input type="radio" id="not-present" name="not-present" value="people-not-present" class="input not-present"> 
+            <label class="labels" for="not-present">Pessoas que já deixaram o hotel</label>
+        </div>
     </div>
     <div class="container-table">
         <table class="table">

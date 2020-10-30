@@ -1,11 +1,9 @@
 package com.senior.crudHotelBackend.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
-import com.senior.crudHotelBackend.checkInModel.CheckinModel;
+import com.senior.crudHotelBackend.model.Checkin;
 
-@Repository
-public interface CheckinRepository extends JpaRepository<CheckinModel, Long> {
+public interface CheckinRepository extends JpaRepository<Checkin, Long> {
 
 }

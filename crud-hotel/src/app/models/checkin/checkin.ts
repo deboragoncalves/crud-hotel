@@ -4,7 +4,7 @@ export class Checkin {
     nome: String;
     documento: String;
     telefone: String;
-    dataEntrada: String;
-    dataSaida: String;
+    dataEntrada: string;
+    dataSaida: string;
     adicionalVeiculo: boolean;
 }

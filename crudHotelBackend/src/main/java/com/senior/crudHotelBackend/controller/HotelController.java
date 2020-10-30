@@ -8,25 +8,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.senior.crudHotelBackend.model.Checkin;
-import com.senior.crudHotelBackend.model.Person;
+import com.senior.crudHotelBackend.model.Hospede;
 import com.senior.crudHotelBackend.repository.CheckinRepository;
-import com.senior.crudHotelBackend.repository.PersonRepository;
+import com.senior.crudHotelBackend.repository.HospedeRepository;
 
 @RestController
 @RequestMapping("/api/v1/")
 public class HotelController {
 	
 	@Autowired
-	private PersonRepository personRepository;
+	private HospedeRepository hospedeRepository;
 	
 	@Autowired
 	private CheckinRepository checkinRepository;
 	
 	// Get
 	
-	@GetMapping("/people")
-	public List<Person> getAllPeople() {
-		return personRepository.findAll();
+	@GetMapping("/hospedes")
+	public List<Hospede> getAllPeople() {
+		return hospedeRepository.findAll();
 	}
 	
 	@GetMapping("/checkin")

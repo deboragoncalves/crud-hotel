@@ -6,8 +6,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 @Table(name="checkin")
@@ -27,17 +29,24 @@ public class Checkin {
 	@Column(name="adicional_veiculo")
 	private boolean adicionalVeiculo;
 	
-	@ManyToOne(targetEntity=Person.class)
-	Person person = new Person();
+	@OneToOne(targetEntity=Hospede.class)
+	Hospede hospede = new Hospede();
 	
+	@JsonProperty("id_person")
+	@JoinColumn(name="id_person")
+	private Long id_person = hospede.getId();
+	
+	@JsonProperty("nome")
 	@JoinColumn(name="nome")
-	private String nome = person.getNome();
+	private String nome = hospede.getNome();
 	
+	@JsonProperty("documento")
 	@JoinColumn(name="documento")
-	private String documento = person.getDocumento();
+	private String documento = hospede.getDocumento();
 	
+	@JsonProperty("telefone")
 	@JoinColumn(name="telefone")
-	private String telefone = person.getTelefone();
+	private String telefone = hospede.getTelefone();
 	
 	public Checkin() {
 		
@@ -77,6 +86,8 @@ public class Checkin {
 	public void setAdicionalVeiculo(boolean adicionalVeiculo) {
 		this.adicionalVeiculo = adicionalVeiculo;
 	}
+
 	
+
 	
 }

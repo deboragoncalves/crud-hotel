@@ -1,7 +1,10 @@
 export class Checkin {
     id: number;
-    person: object;
-    beginDate: Date;
-    finalDate: Date;
-    carPlus: boolean;
+    idHospede: number;
+    nome: String;
+    documento: String;
+    telefone: String;
+    dataEntrada: String;
+    dataSaida: String;
+    adicionalVeiculo: boolean;
 }

@@ -30,9 +30,6 @@ public class Checkin {
 	@ManyToOne(targetEntity=Person.class)
 	Person person = new Person();
 	
-	@JoinColumn(name="id_person")
-	private Long id_person = person.getId();
-	
 	@JoinColumn(name="nome")
 	private String nome = person.getNome();
 	

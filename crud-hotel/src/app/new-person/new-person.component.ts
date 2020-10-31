@@ -12,21 +12,21 @@ export class NewPersonComponent implements OnInit {
 
   hospede: Hospede = new Hospede();
 
-  constructor(private router: Router, private hotelService: HotelService) { }
+  constructor(private hotelService: HotelService) { }
 
-  showMainComponents;
   ngOnInit(): void {
   }
 
   saveGuest() {
     this.hotelService.createGuest(this.hospede).subscribe(data => {
       console.log(data);
+
+      window.location.reload()
     }, error => console.log(error))
   }
 
   onSubmit() {
     this.saveGuest();
-    window.location.reload()
   }
 
 }

@@ -5,9 +5,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.senior.crudHotelBackend.model.Checkin;
@@ -36,6 +39,11 @@ public class HotelController {
 	@GetMapping("/checkin")
 	public List<Checkin> getAllCheckin() {
 		return checkinRepository.findAll();
+	}
+	
+	@GetMapping("/hospedes/{documento}")
+	public @ResponseBody Hospede getGuestByDocument(@PathVariable("documento") String documento) {
+	    return hospedeRepository.findByDocumento(documento);
 	}
 
 	// Post

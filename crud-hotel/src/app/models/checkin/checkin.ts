@@ -1,9 +1,6 @@
 export class Checkin {
+    hospede: Object;
     id: number;
-    idHospede: number;
-    nome: String;
-    documento: String;
-    telefone: String;
     dataEntrada: string;
     dataSaida: string;
     adicionalVeiculo: boolean;

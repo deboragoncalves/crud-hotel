@@ -30,23 +30,9 @@ public class Checkin {
 	private boolean adicionalVeiculo;
 	
 	@OneToOne(targetEntity=Hospede.class)
-	Hospede hospede = new Hospede();
-	
-	@JsonProperty("id_person")
 	@JoinColumn(name="id_person")
-	private Long id_person = hospede.getId();
-	
-	@JsonProperty("nome")
-	@JoinColumn(name="nome")
-	private String nome = hospede.getNome();
-	
-	@JsonProperty("documento")
-	@JoinColumn(name="documento")
-	private String documento = hospede.getDocumento();
-	
-	@JsonProperty("telefone")
-	@JoinColumn(name="telefone")
-	private String telefone = hospede.getTelefone();
+	@JsonProperty("hospede")
+	private Hospede hospede;
 	
 	public Checkin() {
 		

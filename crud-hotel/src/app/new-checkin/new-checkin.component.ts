@@ -14,9 +14,9 @@ export class NewCheckinComponent implements OnInit {
 
   checkin: Checkin = new Checkin();
 
-  documento: any;
-  dataSaida: any;
-  dataEntrada: any;
+  documento: string;
+  dataSaida: string;
+  dataEntrada: string;
   adicionalVeiculo: boolean;
 
   constructor(private hotelService: HotelService) { }
@@ -29,14 +29,23 @@ export class NewCheckinComponent implements OnInit {
       console.log(data)
 
       window.location.reload()
-    }, error => console.log(error)
-  )}
+      
+    }, error => console.log(error))
+  }
 
-  getGuestByDocument() {
-    this.hotelService.getGuestByDocument(this.documento.text.toString()).subscribe(data => {
+  getGuestByDocument(documento: string, dataEntrada: string, dataSaida: string, adicionalVeiculo: boolean) {
+    this.hotelService.getGuestByDocument(documento).subscribe(data => {
+
       console.log(data)
 
-      // this.saveCheckin();
+      this.checkin.hospede = data
+      this.checkin.dataEntrada = dataEntrada
+      this.checkin.dataSaida = dataSaida
+      this.checkin.adicionalVeiculo = adicionalVeiculo
+
+      console.log(this.checkin)
+
+      this.saveCheckin();
 
     }, error => console.log(error))
   }
@@ -50,12 +59,7 @@ export class NewCheckinComponent implements OnInit {
     if ((this.documento != undefined && this.documento != "")) {
       if ((this.dataEntrada != undefined && this.dataEntrada != "")) {
         if ((this.dataSaida != undefined && this.dataSaida != "")) {
-          // this.getGuestByDocument();
-
-          console.log(this.documento)
-          console.log(this.dataEntrada)
-          console.log(this.dataSaida)
-          console.log(this.adicionalVeiculo)
+          this.getGuestByDocument(this.documento, this.dataEntrada, this.dataSaida, this.adicionalVeiculo);
         } else {
           alert("O campo Data de Saida é obrigatório")
           return;

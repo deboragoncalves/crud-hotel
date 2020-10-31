@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -48,12 +47,12 @@ public class HotelController {
 
 	// Post
 	
-	@PostMapping("/createGuest")
+	@PostMapping("/guests")
 	public Hospede createGuest(@RequestBody Hospede hospede) {
 		return hospedeRepository.save(hospede);
 	}
 	
-	@PostMapping("/createCheckin")
+	@PostMapping(value="/createCheckin")
 	public Checkin createCheckin(@RequestBody Checkin checkin) {
 		return checkinRepository.save(checkin);
 	}

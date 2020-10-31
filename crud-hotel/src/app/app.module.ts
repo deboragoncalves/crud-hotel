@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { ListHotelGuestsComponent } from './list-hotel-guests/list-hotel-guests.component';
 import { NewCheckinComponent } from './new-checkin/new-checkin.component';
 import { NewPersonComponent } from './new-person/new-person.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { NewPersonComponent } from './new-person/new-person.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

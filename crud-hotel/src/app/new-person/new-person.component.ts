@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ɵbypassSanitizationTrustResourceUrl } from '@angular/core';
+import { Router } from '@angular/router';
+import { HotelService } from '../hotel.service';
+import { Hospede } from '../models/person/hospede';
 
 @Component({
   selector: 'app-new-person',
@@ -7,9 +10,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NewPersonComponent implements OnInit {
 
-  constructor() { }
+  hospede: Hospede = new Hospede();
 
+  constructor(private router: Router, private hotelService: HotelService) { }
+
+  showMainComponents;
   ngOnInit(): void {
+  }
+
+  saveGuest() {
+    this.hotelService.createGuest(this.hospede).subscribe(data => {
+      console.log(data);
+    }, error => console.log(error))
+  }
+
+  onSubmit() {
+    this.saveGuest();
+    this.router.navigateByUrl('/')
   }
 
 }

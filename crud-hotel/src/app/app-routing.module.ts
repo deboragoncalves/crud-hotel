@@ -3,7 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { NewPersonComponent } from './new-person/new-person.component';
 
 const routes: Routes = [
-  { path: 'person', component: NewPersonComponent}
+  { path: 'person', component: NewPersonComponent},
+  { path: '', redirectTo: 'app-root', pathMatch: 'full'}
 ];
 
 @NgModule({

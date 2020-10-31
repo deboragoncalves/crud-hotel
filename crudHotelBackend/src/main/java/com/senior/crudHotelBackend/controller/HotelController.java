@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,7 +29,7 @@ public class HotelController {
 	// Get
 	
 	@GetMapping("/hospedes")
-	public List<Hospede> getAllPeople() {
+	public List<Hospede> getAllGuests() {
 		return hospedeRepository.findAll();
 	}
 	
@@ -36,5 +38,16 @@ public class HotelController {
 		return checkinRepository.findAll();
 	}
 
-
+	// Post
+	
+	@PostMapping("/createGuest")
+	public Hospede createGuest(@RequestBody Hospede hospede) {
+		return hospedeRepository.save(hospede);
+	}
+	
+	@PostMapping("/createCheckin")
+	public Checkin createCheckin(@RequestBody Checkin checkin) {
+		return checkinRepository.save(checkin);
+	}
+	
 }

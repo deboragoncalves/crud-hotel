@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AppComponent } from '../app.component';
 
 @Component({
   selector: 'app-new-checkin',
@@ -7,16 +9,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NewCheckinComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
   }
 
   onSubmit(event: any) {
-    event.target.dateIn.value
-    event.target.dateOut.value
-    event.target.person.value
-
   }
-
 }

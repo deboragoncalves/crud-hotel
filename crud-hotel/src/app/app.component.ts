@@ -10,8 +10,14 @@ export class AppComponent {
   title = 'crud-hotel';
 
   showMainComponents = true;
+  clickNewPerson = false;
 
   newPersonClick() {
-    this.showMainComponents = !this.showMainComponents
+
+    if (this.clickNewPerson) {
+      this.showMainComponents = !this.showMainComponents
+    }
+
+    console.log(this.clickNewPerson)
   }
 }

@@ -20,4 +20,12 @@ export class HotelService {
   getGuestsList(): Observable<Hospede[]> {
     return this.httpClient.get<Hospede[]>(this.baseUrl + "hospedes");
   }
+
+  createCheckin(checkin: Checkin): Observable<Object> {
+    return this.httpClient.post(this.baseUrl + "createCheckin", checkin);
+  }
+
+  createGuest(guest: Hospede): Observable<Object> {
+    return this.httpClient.post(this.baseUrl + "createGuest", guest);
+  }
 }

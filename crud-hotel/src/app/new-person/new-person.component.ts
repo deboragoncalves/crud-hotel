@@ -26,7 +26,23 @@ export class NewPersonComponent implements OnInit {
   }
 
   onSubmit() {
-    this.saveGuest();
+    if ((this.hospede.nome != undefined && this.hospede.nome != "")) {
+      if ((this.hospede.documento != undefined && this.hospede.documento != "")) {
+        if ((this.hospede.telefone != undefined && this.hospede.telefone != "")) {
+          this.saveGuest();
+        } else {
+          alert("O campo Telefone é obrigatório.")
+          return;
+        }
+      } else {
+        alert("O campo Documento é obrigatório.")
+        return;
+      }
+    } else {
+      alert("O campo Nome é obrigatório.")
+      return;
+    }
+    
   }
 
 }

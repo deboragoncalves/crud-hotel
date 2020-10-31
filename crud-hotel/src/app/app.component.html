@@ -3,11 +3,13 @@
     <i class="fa fa-bars fa-2x"></i>
 </nav>
 
-<button (click)="newPersonClick()" routerLink="person">Incluir pessoa</button>
+<button (click)="showMainComponents = false" routerLink="person">Incluir pessoa</button>
 
 <div [hidden]="!showMainComponents">
     <app-new-checkin></app-new-checkin>
     <app-list-hotel-guests></app-list-hotel-guests>
+    <router-outlet name="main-view"></router-outlet>
 </div>
 
 <router-outlet></router-outlet>
+

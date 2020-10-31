@@ -26,7 +26,7 @@ export class NewPersonComponent implements OnInit {
 
   onSubmit() {
     this.saveGuest();
-    this.router.navigateByUrl('/')
+    window.location.reload()
   }
 
 }

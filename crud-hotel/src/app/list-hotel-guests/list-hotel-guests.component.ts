@@ -27,8 +27,6 @@ export class ListHotelGuestsComponent implements OnInit {
   plusCarweek: number = 15.00;
   plusCarWeekend: number = 20.00;
 
-  plusHour: number = 0.00;
-
   constructor(private hotelService: HotelService) { }
 
   ngOnInit(): void {
@@ -104,6 +102,8 @@ export class ListHotelGuestsComponent implements OnInit {
     var valuePlusCarWeekend = 0.00
     var valuePlusCarTotal = 0.00
 
+    var valuePlusHour = 0.00
+
     var valueTotal = 0.00
 
     for (var i = 0; i < data.length; i++) {
@@ -122,11 +122,25 @@ export class ListHotelGuestsComponent implements OnInit {
         valuePlusCarTotal = (valuePlusCarWeek + valuePlusCarWeekend)
       }
 
-      valueTotal = valuePlusCarTotal + valueTotalDays
+      if (new Date(data[i].dataSaida).getHours() >= 16) {
+        console.log("Entrou " + new Date(data[i].dataSaida).getHours())
+
+        if ((new Date(data[i].dataSaida).getHours() == 16 && new Date(data[i].dataSaida).getMinutes() > 30)
+        || new Date(data[i].dataSaida).getHours() > 16) {
+
+          if (new Date(data[i].dataSaida).getDay() == 0 || new Date(data[i].dataSaida).getDay() == 6) {
+            valuePlusHour = this.weekendDayValue
+          } else {
+            valuePlusHour = this.weekDayValue
+          }
+          
+        } 
+
+      }
+
+      valueTotal = valuePlusCarTotal + valueTotalDays + valuePlusHour
 
       this.values.push(valueTotal)
-
-
 
     }
 

@@ -24,6 +24,11 @@ export class ListHotelGuestsComponent implements OnInit {
   weekDayValue: number = 120.00;
   weekendDayValue: number = 150.00;
 
+  plusCarweek: number = 15.00;
+  plusCarWeekend: number = 20.00;
+
+  plusHour: number = 0.00;
+
   constructor(private hotelService: HotelService) { }
 
   ngOnInit(): void {
@@ -34,6 +39,8 @@ export class ListHotelGuestsComponent implements OnInit {
     this.hotelService.getCheckinList().subscribe(data => {
       this.checkIn = data;
 
+      console.log(data)
+
       this.calcDays(data);
 
       // Preencher tabela 
@@ -41,7 +48,7 @@ export class ListHotelGuestsComponent implements OnInit {
       for (var i = 0; i < data.length; i++) {
         this.dataList.push({name: data[i].hospede.nome, document: data[i].hospede.documento, value: this.values[i]})
       }
-    })
+    }, error => console.log(error))
   }
 
   calcDays(data: Array<Checkin>) {
@@ -83,26 +90,46 @@ export class ListHotelGuestsComponent implements OnInit {
       this.countDayWeekends.push(count)
     } 
 
-    this.calcValues();
+    this.calcValues(data);
 
   }
 
-  calcValues() {
+  calcValues(data: Array<Checkin>) {
 
     var valueDayWeek = 0.00
     var valueDayWeekend = 0.00
     var valueTotalDays = 0.00
 
-    for (var i = 0; i < this.countDayWeekends.length; i++) {
+    var valuePlusCarWeek = 0.00
+    var valuePlusCarWeekend = 0.00
+    var valuePlusCarTotal = 0.00
+
+    var valueTotal = 0.00
+
+    for (var i = 0; i < data.length; i++) {
+
       valueDayWeek = (this.totalDays[i] - this.countDayWeekends[i]) * this.weekDayValue
       valueDayWeekend = this.countDayWeekends[i] * this.weekendDayValue
-      valueTotalDays = valueDayWeek + valueDayWeekend
+      valueTotalDays = (valueDayWeek + valueDayWeekend)
 
-      this.values.push(valueTotalDays)
+      valueTotal = valueTotalDays
+
+      // Extras veículo e horário
+
+      if (data[i].adicionalVeiculo) {
+        valuePlusCarWeek = (this.totalDays[i] - this.countDayWeekends[i]) * this.plusCarweek
+        valuePlusCarWeekend = this.countDayWeekends[i] * this.plusCarWeekend
+        valuePlusCarTotal = (valuePlusCarWeek + valuePlusCarWeekend)
+      }
+
+      valueTotal = valuePlusCarTotal + valueTotalDays
+
+      this.values.push(valueTotal)
+
+
+
     }
 
-  }
-
-    
+  } 
 }
 

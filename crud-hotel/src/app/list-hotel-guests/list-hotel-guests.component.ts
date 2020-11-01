@@ -15,52 +15,43 @@ export class ListHotelGuestsComponent implements OnInit {
   
   dataList: Array<{ name: string, document: string, value: number }> = [];
 
-  
-  name: Array<string> = [];
-  document: Array<string> = [];
-  value: Array<number> = [];
-
   weekDayValue: number = 120;
   weekendDayValue: number = 150;
 
   constructor(private hotelService: HotelService) { }
 
   ngOnInit(): void {
-    this.getGuests();
     this.getCheckin();
   }
 
   private getCheckin() {
     this.hotelService.getCheckinList().subscribe(data => {
       this.checkIn = data;
+      console.log(data)
 
-      for (var i = 0; i < this.checkIn.length; i++) {
-    
-        // Calcular valor com base nos inputs
-        this.value.push(0)
+      for (var i = 0; i < data.length; i++) {
+
+        // Calcular valor
+
+        const milisecondsDateIn = new Date(data[i].dataEntrada).getMilliseconds()
+        const milisecondsDateOut = new Date(data[i].dataSaida).getMilliseconds()
+
+        console.log("Mili in " + milisecondsDateIn)
+        console.log("Mili out " + milisecondsDateOut)
+
+        const milisecondsOneDay = 1000 * 60 * 60 * 24;
+
+        var days = (milisecondsDateIn - milisecondsDateOut) / milisecondsOneDay
+
+        console.log("Dias " + days)
       }
 
-      this.populateList();
-    })
-  }
+      // Preencher tabela 
 
-  private getGuests() {
-    this.hotelService.getGuestsList().subscribe(data => {
-      this.hospede = data
-
-      for (var i = 0; i < this.hospede.length; i++) {
-        this.name.push(this.hospede[i].nome)
-        this.document.push(this.hospede[i].documento)
+      for (var i = 0; i < data.length; i++) {
+        this.dataList.push({name: data[i].hospede.nome, document: data[i].hospede.documento, value: 0})
       }
     })
-  }
-
-  private populateList() {
-    for (var i = 0; i < this.name.length; i++) {
-      this.dataList.push({ name: this.name[i], document: this.document[i], value: this.value[i] })
-    }
-
-    console.log(this.dataList)
   }
 
 }

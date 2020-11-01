@@ -1,5 +1,7 @@
+import { Hospede } from '../person/hospede';
+
 export class Checkin {
-    hospede: Object;
+    hospede: Hospede;
     id: number;
     dataEntrada: string;
     dataSaida: string;

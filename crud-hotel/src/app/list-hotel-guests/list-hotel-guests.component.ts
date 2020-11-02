@@ -155,46 +155,60 @@ export class ListHotelGuestsComponent implements OnInit {
     if (event.target.value) {
 
       this.filteredDataList = this.checkIn.filter(data => {
-        if (data.dataSaida == null) {
+        for (var i = 0; i < this.checkIn.length; i++) {
+          if (new Date(data.dataSaida).getFullYear() == new Date().getFullYear()) {
+            if (new Date(data.dataSaida).getMonth() == new Date().getMonth()) {
+              if (new Date(data.dataSaida).getDate() == new Date().getDate()) {
+                if (new Date(data.dataSaida).getMinutes() < new Date().getMinutes()) {
+                  console.log(new Date(data.dataSaida).getDate() + " I: " + i + data.hospede.nome)
 
-          for (var i = 0; i < this.checkIn.length; i++) {
-            if (data.hospede.documento == this.checkIn[i].hospede.documento) {
-              this.dataList = []
-              this.dataList.push({name: data.hospede.nome, document: data.hospede.documento, value: this.values[i]})
+                  this.dataList = []
+                  console.log(this.dataList)
+                  this.dataList.push({name: data.hospede.nome, document: data.hospede.documento, value: this.values[i]})
+
+                  console.log(this.dataList)
+
+                  return this.dataList 
+                }
+              } 
             }
-          } 
           
-          return this.dataList  
-
+          }
         }
       })
-
-
     }
-}
+  }
 
   changeNotPresent(event) {
 
     if (event.target.value) {    
 
       this.filteredDataList = this.checkIn.filter(data => {
-        if (data.dataSaida != null) {
-
           for (var i = 0; i < this.checkIn.length; i++) {
-            if (data.hospede.documento == this.checkIn[i].hospede.documento) {
+            if (new Date(data.dataSaida).getFullYear() < new Date().getFullYear()) {
+
               this.dataList = []
               this.dataList.push({name: data.hospede.nome, document: data.hospede.documento, value: this.values[i]})
-            }
-          }
 
-          return this.dataList  
+              return this.dataList  
 
+            } else if (new Date(data.dataSaida).getMonth() < new Date().getMonth()) {
+
+              this.dataList = []
+              this.dataList.push({name: data.hospede.nome, document: data.hospede.documento, value: this.values[i]})
+
+              return this.dataList 
+            
+          } else if ((new Date(data.dataSaida).getDate() < new Date().getDate()) || 
+              ((new Date(data.dataSaida).getDate() == new Date().getDate()) 
+              && (new Date(data.dataSaida).getMinutes() < new Date().getMinutes())))  {
+
+              this.dataList.push({name: data.hospede.nome, document: data.hospede.documento, value: this.values[i]})
+
+              return this.dataList 
+          } 
         }
       })
-
-
+    }
   }
-
-}
-
 }

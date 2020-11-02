@@ -24,6 +24,12 @@ export class NewCheckinComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  updateCheckinDateOut() {
+    this.hotelService.updateCheckinDateOut(this.checkin.id, this.checkin).subscribe(data => {
+      console.log(data)
+    }, error => console.log(error))
+  }
+
   saveCheckin() {
     this.hotelService.createCheckin(this.checkin).subscribe(data => {
       console.log(data)
@@ -45,7 +51,19 @@ export class NewCheckinComponent implements OnInit {
 
       console.log(this.checkin)
 
-      this.saveCheckin();
+      if (this.checkin.dataSaida == null) {
+
+        // Patch
+
+        // this.updateCheckinDateOut();
+
+      } else {
+
+        // Post
+
+        this.saveCheckin();
+      }
+
 
     }, error => console.log(error))
   }

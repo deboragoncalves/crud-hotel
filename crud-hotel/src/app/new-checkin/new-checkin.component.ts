@@ -57,17 +57,7 @@ export class NewCheckinComponent implements OnInit {
     }
 
     if ((this.documento != undefined && this.documento != "")) {
-      if ((this.dataEntrada != undefined && this.dataEntrada != "")) {
-        if ((this.dataSaida != undefined && this.dataSaida != "")) {
-          this.getGuestByDocument(this.documento, this.dataEntrada, this.dataSaida, this.adicionalVeiculo);
-        } else {
-          alert("O campo Data de Saida é obrigatório")
-          return;
-        }
-      } else {
-        alert("O campo Data de Entrada é obrigatório")
-        return;
-      }
+      this.getGuestByDocument(this.documento, this.dataEntrada, this.dataSaida, this.adicionalVeiculo);
     } else {
       alert("O campo Documento é obrigatório")
       return;

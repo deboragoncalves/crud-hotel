@@ -14,12 +14,13 @@ export class ListHotelGuestsComponent implements OnInit {
   hospede: Hospede[];
   checkIn: Checkin[];
   
-  dataList: Array<{ name: string, document: string, value: number }> = [];
+  dataList: Array<{ name: string, document: string, value: String }> = [];
+  filteredDataList: Array<any> = [];
 
   totalDays: Array<number> = [];
   countDayWeekends: Array<number> = [];
 
-  values: Array<number> = [];
+  values: Array<String> = [];
 
   weekDayValue: number = 120.00;
   weekendDayValue: number = 150.00;
@@ -39,7 +40,7 @@ export class ListHotelGuestsComponent implements OnInit {
 
       console.log(data)
 
-      this.calcDays(data);
+      this.calcDays(data)
 
       // Preencher tabela 
 
@@ -50,7 +51,6 @@ export class ListHotelGuestsComponent implements OnInit {
   }
 
   calcDays(data: Array<Checkin>) {
-
     for (var i = 0; i < data.length; i++) {
 
       // Diferenca de dias
@@ -93,7 +93,6 @@ export class ListHotelGuestsComponent implements OnInit {
   }
 
   calcValues(data: Array<Checkin>) {
-
     var valueDayWeek = 0.00
     var valueDayWeekend = 0.00
     var valueTotalDays = 0.00
@@ -107,43 +106,95 @@ export class ListHotelGuestsComponent implements OnInit {
     var valueTotal = 0.00
 
     for (var i = 0; i < data.length; i++) {
+      if (data[i].dataSaida != null) {
 
-      valueDayWeek = (this.totalDays[i] - this.countDayWeekends[i]) * this.weekDayValue
-      valueDayWeekend = this.countDayWeekends[i] * this.weekendDayValue
-      valueTotalDays = (valueDayWeek + valueDayWeekend)
+        valueDayWeek = (this.totalDays[i] - this.countDayWeekends[i]) * this.weekDayValue
+        valueDayWeekend = this.countDayWeekends[i] * this.weekendDayValue
+        valueTotalDays = (valueDayWeek + valueDayWeekend)
 
-      valueTotal = valueTotalDays
+        // Extras veículo e horário
 
-      // Extras veículo e horário
+        if (data[i].adicionalVeiculo) {
+          valuePlusCarWeek = (this.totalDays[i] - this.countDayWeekends[i]) * this.plusCarweek
+          valuePlusCarWeekend = this.countDayWeekends[i] * this.plusCarWeekend
+          valuePlusCarTotal = (valuePlusCarWeek + valuePlusCarWeekend)
 
-      if (data[i].adicionalVeiculo) {
-        valuePlusCarWeek = (this.totalDays[i] - this.countDayWeekends[i]) * this.plusCarweek
-        valuePlusCarWeekend = this.countDayWeekends[i] * this.plusCarWeekend
-        valuePlusCarTotal = (valuePlusCarWeek + valuePlusCarWeekend)
-      }
+        }
 
-      if (new Date(data[i].dataSaida).getHours() >= 16) {
-        console.log("Entrou " + new Date(data[i].dataSaida).getHours())
+        if (new Date(data[i].dataSaida).getHours() >= 16) {
 
-        if ((new Date(data[i].dataSaida).getHours() == 16 && new Date(data[i].dataSaida).getMinutes() > 30)
-        || new Date(data[i].dataSaida).getHours() > 16) {
+          if ((new Date(data[i].dataSaida).getHours() == 16 && new Date(data[i].dataSaida).getMinutes() > 30)
+          || new Date(data[i].dataSaida).getHours() > 16) {
 
           if (new Date(data[i].dataSaida).getDay() == 0 || new Date(data[i].dataSaida).getDay() == 6) {
             valuePlusHour = this.weekendDayValue
           } else {
             valuePlusHour = this.weekDayValue
           }
-          
+
         } 
 
+        }
+
+        valueTotal = valueTotalDays + valuePlusCarTotal + valuePlusHour
+
+        var stringTotalValue = valueTotal.toString().replace(".", ",")
+      
+        this.values.push(stringTotalValue)
+
+      } else {
+        this.values[i] = ""
       }
-
-      valueTotal = valuePlusCarTotal + valueTotalDays + valuePlusHour
-
-      this.values.push(valueTotal)
-
+      
     }
 
   } 
+
+  changeIsPresent(event) {
+
+    if (event.target.value) {
+
+      this.filteredDataList = this.checkIn.filter(data => {
+        if (data.dataSaida == null) {
+
+          for (var i = 0; i < this.checkIn.length; i++) {
+            if (data.hospede.documento == this.checkIn[i].hospede.documento) {
+              this.dataList = []
+              this.dataList.push({name: data.hospede.nome, document: data.hospede.documento, value: this.values[i]})
+            }
+          } 
+          
+          return this.dataList  
+
+        }
+      })
+
+
+    }
 }
 
+  changeNotPresent(event) {
+
+    if (event.target.value) {    
+
+      this.filteredDataList = this.checkIn.filter(data => {
+        if (data.dataSaida != null) {
+
+          for (var i = 0; i < this.checkIn.length; i++) {
+            if (data.hospede.documento == this.checkIn[i].hospede.documento) {
+              this.dataList = []
+              this.dataList.push({name: data.hospede.nome, document: data.hospede.documento, value: this.values[i]})
+            }
+          }
+
+          return this.dataList  
+
+        }
+      })
+
+
+  }
+
+}
+
+}

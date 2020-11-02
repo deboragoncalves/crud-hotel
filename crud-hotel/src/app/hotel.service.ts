@@ -25,6 +25,10 @@ export class HotelService {
     return this.httpClient.get<Hospede>(this.baseUrl + "hospedes/" + document)
   }
 
+  getCheckinById(id: number): Observable<Checkin> {
+    return this.httpClient.get<Checkin>(this.baseUrl + "checkin/" + id)
+  }
+
   createCheckin(checkin: Checkin): Observable<Checkin> {
     return this.httpClient.post<Checkin>(this.baseUrl + "checkin/post", checkin);
   }
@@ -33,11 +37,11 @@ export class HotelService {
     return this.httpClient.post<Hospede>(this.baseUrl + "guests", guest);
   }
 
-  updateCheckin(id: number, checkin: Checkin): Observable<Object> {
-    return this.httpClient.put(this.baseUrl + "checkin/" + id, checkin);
+  updateCheckin(id: number, checkin: Checkin): Observable<Checkin> {
+    return this.httpClient.put<Checkin>(this.baseUrl + "checkin/put/" + id, checkin);
   }
 
-  updateCheckinDateOut(id: number, checkin: Checkin): Observable<Object> {
-    return this.httpClient.patch<Object>(this.baseUrl + "checkin/" + id, checkin);
+  updateCheckinDateOut(id: number, checkin: Checkin): Observable<Checkin> {
+    return this.httpClient.patch<Checkin>(this.baseUrl + "checkin/patch/" + id, checkin);
   }
 }

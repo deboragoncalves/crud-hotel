@@ -1,9 +1,7 @@
-import { isNull } from '@angular/compiler/src/output/output_ast';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { AppComponent } from '../app.component';
 import { HotelService } from '../hotel.service';
 import { Checkin } from '../models/checkin/checkin';
+import { Hospede } from '../models/person/hospede';
 
 @Component({
   selector: 'app-new-checkin',
@@ -13,6 +11,8 @@ import { Checkin } from '../models/checkin/checkin';
 export class NewCheckinComponent implements OnInit {
 
   checkin: Checkin = new Checkin();
+
+  checkinId: Array<{ id: number, hospede: Hospede, dataEntrada: string, data: string, plusCar: boolean }> = [];
 
   documento: string;
   dataSaida: string;
@@ -24,9 +24,28 @@ export class NewCheckinComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  updateCheckin(checkin: Checkin) {
+    this.hotelService.getCheckinList().subscribe(data => {
+      for (var i = 0; i < data.length; i++) {
+
+       this.hotelService.getCheckinById(data[i].id).subscribe(data => {
+
+         if (data.hospede.nome == checkin.hospede.nome && data.dataSaida != null) {
+          this.hotelService.updateCheckin(data.id, checkin).subscribe(data => {    
+            console.log(data);
+    
+            window.location.reload()
+            }, error => console.log(error))
+          }
+      }, error => console.log(error))
+      }
+    }, error => console.log(error))
+  }
+
   updateCheckinDateOut() {
+    
     this.hotelService.updateCheckinDateOut(this.checkin.id, this.checkin).subscribe(data => {
-      console.log(data)
+      console.log(data);
     }, error => console.log(error))
   }
 
@@ -42,14 +61,10 @@ export class NewCheckinComponent implements OnInit {
   getGuestByDocument(documento: string, dataEntrada: string, dataSaida: string, adicionalVeiculo: boolean) {
     this.hotelService.getGuestByDocument(documento).subscribe(data => {
 
-      console.log(data)
-
       this.checkin.hospede = data
       this.checkin.dataEntrada = dataEntrada
       this.checkin.dataSaida = dataSaida
       this.checkin.adicionalVeiculo = adicionalVeiculo
-
-      console.log(this.checkin)
 
       if (this.checkin.dataSaida == null) {
 
@@ -57,9 +72,19 @@ export class NewCheckinComponent implements OnInit {
 
         this.saveCheckin();
 
-      } else {
 
-        
+      } else if (this.checkin.dataSaida != null && this.checkin.dataEntrada == null) {
+
+        // Path
+
+        this.updateCheckinDateOut();
+
+      } else if (this.checkin.dataSaida != null && this.checkin.dataEntrada != null) {
+
+        // Put
+
+        this.updateCheckin(this.checkin);
+
       }
 
 

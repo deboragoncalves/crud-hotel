@@ -153,21 +153,21 @@ export class ListHotelGuestsComponent implements OnInit {
   changeIsPresent(event) {
 
     if (event.target.value) {
+      this.dataList = []
 
       this.filteredDataList = this.checkIn.filter(data => {
+
         for (var i = 0; i < this.checkIn.length; i++) {
-          if (new Date(data.dataSaida).getFullYear() == new Date().getFullYear()) {
-            if (new Date(data.dataSaida).getMonth() == new Date().getMonth()) {
-              if (new Date(data.dataSaida).getDate() == new Date().getDate()) {
-                if (new Date(data.dataSaida).getMinutes() < new Date().getMinutes()) {
+
+          if (new Date(data.dataSaida).getFullYear() == new Date().getFullYear() || data.dataSaida == null) {
+            if (new Date(data.dataSaida).getMonth() == new Date().getMonth() || data.dataSaida == null) {
+              if (new Date(data.dataSaida).getDate() == new Date().getDate() || data.dataSaida == null) {
+                if (new Date(data.dataSaida).getMinutes() < new Date().getMinutes() || data.dataSaida == null) {
                   console.log(new Date(data.dataSaida).getDate() + " I: " + i + data.hospede.nome)
 
-                  this.dataList = []
-                  console.log(this.dataList)
                   this.dataList.push({name: data.hospede.nome, document: data.hospede.documento, value: this.values[i]})
 
                   console.log(this.dataList)
-
                   return this.dataList 
                 }
               } 
@@ -181,32 +181,35 @@ export class ListHotelGuestsComponent implements OnInit {
 
   changeNotPresent(event) {
 
-    if (event.target.value) {    
+    if (event.target.value) { 
+      this.dataList = []   
 
       this.filteredDataList = this.checkIn.filter(data => {
           for (var i = 0; i < this.checkIn.length; i++) {
-            if (new Date(data.dataSaida).getFullYear() < new Date().getFullYear()) {
+            if (new Date(data.dataSaida).getFullYear() < new Date().getFullYear() && data.dataSaida != null) {
 
-              this.dataList = []
               this.dataList.push({name: data.hospede.nome, document: data.hospede.documento, value: this.values[i]})
 
               return this.dataList  
 
-            } else if (new Date(data.dataSaida).getMonth() < new Date().getMonth()) {
+            } else if (new Date(data.dataSaida).getMonth() < new Date().getMonth() && data.dataSaida != null) {
 
-              this.dataList = []
               this.dataList.push({name: data.hospede.nome, document: data.hospede.documento, value: this.values[i]})
 
               return this.dataList 
             
-          } else if ((new Date(data.dataSaida).getDate() < new Date().getDate()) || 
-              ((new Date(data.dataSaida).getDate() == new Date().getDate()) 
-              && (new Date(data.dataSaida).getMinutes() < new Date().getMinutes())))  {
+          } else if ((new Date(data.dataSaida).getDate() < new Date().getDate()) && data.dataSaida != null) {
 
               this.dataList.push({name: data.hospede.nome, document: data.hospede.documento, value: this.values[i]})
 
               return this.dataList 
-          } 
+          } else if ((new Date(data.dataSaida).getDate() == new Date().getDate()) 
+          && (new Date(data.dataSaida).getMinutes() < new Date().getMinutes()) && data.dataSaida != null) {
+
+            this.dataList.push({name: data.hospede.nome, document: data.hospede.documento, value: this.values[i]})
+
+            return this.dataList
+          }
         }
       })
     }

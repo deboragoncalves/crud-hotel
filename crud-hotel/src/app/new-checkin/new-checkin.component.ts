@@ -53,15 +53,13 @@ export class NewCheckinComponent implements OnInit {
 
       if (this.checkin.dataSaida == null) {
 
-        // Patch
-
-        // this.updateCheckinDateOut();
-
-      } else {
-
         // Post
 
         this.saveCheckin();
+
+      } else {
+
+        
       }
 
 

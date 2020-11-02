@@ -12,93 +12,77 @@ export class NewCheckinComponent implements OnInit {
 
   checkin: Checkin = new Checkin();
 
-  checkinId: Array<{ id: number, hospede: Hospede, dataEntrada: string, data: string, plusCar: boolean }> = [];
-
-  documento: string;
-  dataSaida: string;
-  dataEntrada: string;
-  adicionalVeiculo: boolean;
+  dataGuest: string;
+  dateIn: string;
+  dateOut: string;
+  plusCar: boolean;
 
   constructor(private hotelService: HotelService) { }
 
   ngOnInit(): void {
   }
 
-  updateCheckin(checkin: Checkin) {
-    this.hotelService.getCheckinList().subscribe(data => {
-      for (var i = 0; i < data.length; i++) {
+  updateCheckin(id: number, checkin: Checkin) {
 
-       this.hotelService.getCheckinById(data[i].id).subscribe(data => {
-
-         if (data.hospede.nome == checkin.hospede.nome && data.dataSaida != null) {
-          this.hotelService.updateCheckin(data.id, checkin).subscribe(data => {    
-            console.log(data);
+      this.hotelService.updateCheckin(id, checkin).subscribe(data => {    
+        console.log(data)
     
-            window.location.reload()
-            }, error => console.log(error))
-          }
+        // window.location.reload()
       }, error => console.log(error))
-      }
-    }, error => console.log(error))
   }
 
-  updateCheckinDateOut() {
-    
-    this.hotelService.updateCheckinDateOut(this.checkin.id, this.checkin).subscribe(data => {
-      console.log(data);
-    }, error => console.log(error))
-  }
+  saveCheckin(checkin: Checkin) {
 
-  saveCheckin() {
-    this.hotelService.createCheckin(this.checkin).subscribe(data => {
-      console.log(data)
+    this.hotelService.createCheckin(checkin).subscribe(data => {
+      console.log("Post " + data.id)
 
-      window.location.reload()
+      // window.location.reload()
       
     }, error => console.log(error))
   }
 
-  getGuestByDocument(documento: string, dataEntrada: string, dataSaida: string, adicionalVeiculo: boolean) {
-    this.hotelService.getGuestByDocument(documento).subscribe(data => {
-
-      this.checkin.hospede = data
-      this.checkin.dataEntrada = dataEntrada
-      this.checkin.dataSaida = dataSaida
-      this.checkin.adicionalVeiculo = adicionalVeiculo
-
-      if (this.checkin.dataSaida == null) {
-
-        // Post
-
-        this.saveCheckin();
-
-
-      } else if (this.checkin.dataSaida != null && this.checkin.dataEntrada == null) {
-
-        // Path
-
-        this.updateCheckinDateOut();
-
-      } else if (this.checkin.dataSaida != null && this.checkin.dataEntrada != null) {
-
-        // Put
-
-        this.updateCheckin(this.checkin);
-
+  getCheckinById(guest: Hospede) {
+    this.hotelService.getCheckinList().subscribe(allCheckin => {
+      
+      for (var i = 0; i < allCheckin.length; i++) {
+        if (allCheckin[i].hospede == guest) {
+          console.log("Entrou " + i)
+          console.log(guest)
+        }
       }
+    })
+  }
 
+  getGuestById(dataGuest: string) {
+    this.hotelService.getGuestsList().subscribe(allGuests => {
 
+      for (var i = 0; i < allGuests.length; i++) {
+        this.hotelService.getGuestById(allGuests[i].id).subscribe(guest => {
+
+          if (guest.documento == dataGuest || guest.nome == dataGuest || guest.telefone == dataGuest) {
+            this.getCheckinById(guest);
+
+            console.log(guest)
+          }
+
+        }, error => console.log(error))
+      }
+  
     }, error => console.log(error))
   }
 
   onSubmit() {
 
-    if (this.adicionalVeiculo == undefined) {
-      this.adicionalVeiculo = false
+    if (this.plusCar == undefined) {
+      this.plusCar = false
     }
 
-    if ((this.documento != undefined && this.documento != "")) {
-      this.getGuestByDocument(this.documento, this.dataEntrada, this.dataSaida, this.adicionalVeiculo);
+    if ((this.dataGuest != undefined && this.dataGuest != "")) {
+
+      console.log(this.dataGuest)
+
+      this.getGuestById(this.dataGuest);
+
     } else {
       alert("O campo Documento é obrigatório")
       return;

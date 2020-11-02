@@ -18,11 +18,11 @@ export class HotelService {
   }
 
   getGuestsList(): Observable<Hospede[]> {
-    return this.httpClient.get<Hospede[]>(this.baseUrl + "hospedes");
+    return this.httpClient.get<Hospede[]>(this.baseUrl + "guests");
   }
 
-  getGuestByDocument(document: String): Observable<Hospede> {
-    return this.httpClient.get<Hospede>(this.baseUrl + "hospedes/" + document)
+  getGuestById(id: number): Observable<Hospede> {
+    return this.httpClient.get<Hospede>(this.baseUrl + "guests/" + id)
   }
 
   getCheckinById(id: number): Observable<Checkin> {
@@ -34,14 +34,11 @@ export class HotelService {
   }
 
   createGuest(guest: Hospede): Observable<Hospede> {
-    return this.httpClient.post<Hospede>(this.baseUrl + "guests", guest);
+    return this.httpClient.post<Hospede>(this.baseUrl + "guests/post", guest);
   }
 
   updateCheckin(id: number, checkin: Checkin): Observable<Checkin> {
-    return this.httpClient.put<Checkin>(this.baseUrl + "checkin/put/" + id, checkin);
+    return this.httpClient.put<Checkin>(this.baseUrl + "checkin/" + id, checkin);
   }
 
-  updateCheckinDateOut(id: number, checkin: Checkin): Observable<Checkin> {
-    return this.httpClient.patch<Checkin>(this.baseUrl + "checkin/patch/" + id, checkin);
-  }
 }

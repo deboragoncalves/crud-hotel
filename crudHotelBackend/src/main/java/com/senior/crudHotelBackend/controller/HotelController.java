@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -90,6 +91,7 @@ public class HotelController {
 			return ResponseEntity.notFound().build();
 		}
 		
+		checkin.setId(checkinUpdate.getId());
 		checkin.setAdicionalVeiculo(checkinUpdate.isAdicionalVeiculo());
 		checkin.setDataEntrada(checkinUpdate.getDataEntrada());
 		checkin.setDataSaida(checkinUpdate.getDataSaida());
@@ -98,4 +100,19 @@ public class HotelController {
 		return ResponseEntity.ok(newCheckinUpdate);
 				
 	}
+	
+	// Delete
+	
+	@DeleteMapping("/delete/guest/{id}")
+	public List<Hospede> deleteGuest(@PathVariable Long id) {
+		this.hospedeRepository.deleteById(id);
+		return this.hospedeRepository.findAll();
+	}
+	
+	@DeleteMapping("/delete/checkin/{id}")
+	public List<Checkin> deleteCheckin(@PathVariable Long id) {
+		this.checkinRepository.deleteById(id);
+		return this.checkinRepository.findAll();
+	}
+	
 }

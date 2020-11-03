@@ -22,7 +22,7 @@ export class NewPersonComponent implements OnInit {
       console.log(data);
 
       window.location.reload()
-    }, error => console.log(error))
+   }, error => console.log(error))
   }
 
   onSubmit() {

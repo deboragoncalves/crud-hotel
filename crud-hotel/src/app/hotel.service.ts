@@ -41,4 +41,12 @@ export class HotelService {
     return this.httpClient.put<Checkin>(this.baseUrl + "checkin/" + id, checkin);
   }
 
+  deleteCheckin(id: number) {
+    return this.httpClient.delete(this.baseUrl + "delete/check/" + id)
+  }
+
+  deleteGuest(id: number) {
+    return this.httpClient.delete(this.baseUrl + "delete/guest/" + id)
+  }
+
 }

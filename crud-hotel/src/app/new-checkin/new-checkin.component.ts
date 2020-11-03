@@ -12,6 +12,7 @@ export class NewCheckinComponent implements OnInit {
 
   checkin: Checkin = new Checkin();
 
+  id: number;
   dataGuest: string;
   dateIn: string;
   dateOut: string;
@@ -25,35 +26,26 @@ export class NewCheckinComponent implements OnInit {
   updateCheckin(id: number, checkin: Checkin) {
 
       this.hotelService.updateCheckin(id, checkin).subscribe(data => {    
-        console.log(data)
     
-        // window.location.reload()
+       window.location.reload()
       }, error => console.log(error))
   }
 
   saveCheckin(checkin: Checkin) {
 
     this.hotelService.createCheckin(checkin).subscribe(data => {
-      console.log("Post " + data.id)
 
-      // window.location.reload()
+      window.location.reload()
       
     }, error => console.log(error))
   }
 
   getCheckinById(guest: Hospede) {
-    this.hotelService.getCheckinList().subscribe(allCheckin => {
-      
-      for (var i = 0; i < allCheckin.length; i++) {
-        if (allCheckin[i].hospede == guest) {
-          console.log("Entrou " + i)
-          console.log(guest)
-        }
-      }
-    })
-  }
+
+}
 
   getGuestById(dataGuest: string) {
+  
     this.hotelService.getGuestsList().subscribe(allGuests => {
 
       for (var i = 0; i < allGuests.length; i++) {
@@ -62,7 +54,6 @@ export class NewCheckinComponent implements OnInit {
           if (guest.documento == dataGuest || guest.nome == dataGuest || guest.telefone == dataGuest) {
             this.getCheckinById(guest);
 
-            console.log(guest)
           }
 
         }, error => console.log(error))
@@ -79,9 +70,7 @@ export class NewCheckinComponent implements OnInit {
 
     if ((this.dataGuest != undefined && this.dataGuest != "")) {
 
-      console.log(this.dataGuest)
-
-      this.getGuestById(this.dataGuest);
+      this.getGuestById(this.dataGuest)
 
     } else {
       alert("O campo Documento é obrigatório")

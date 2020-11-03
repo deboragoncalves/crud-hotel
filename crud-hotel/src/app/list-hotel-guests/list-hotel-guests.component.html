@@ -25,6 +25,8 @@
                     <td class="table-row">{{ data.name }}</td>
                     <td class="table-row">{{ data.document }}</td>
                     <td class="table-row">{{ data.value }}</td>
+                    <td><button (click)="updateCheckin(data.document)" class="button update"><i class="far fa-edit"></i></button>
+                    <button (click)="deleteCheckin(data.document)" class="button delete"><i class="far fa-trash-alt"></i></button></td>
                 </tr>
             </tbody>
         </table>

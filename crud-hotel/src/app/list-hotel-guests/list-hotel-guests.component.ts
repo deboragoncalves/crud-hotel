@@ -1,5 +1,5 @@
-import { invalid } from '@angular/compiler/src/render3/view/util';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { HotelService } from '../hotel.service';
 import { Checkin } from '../models/checkin/checkin';
 import { Hospede } from '../models/person/hospede';
@@ -28,7 +28,7 @@ export class ListHotelGuestsComponent implements OnInit {
   plusCarweek: number = 15.00;
   plusCarWeekend: number = 20.00;
 
-  constructor(private hotelService: HotelService) { }
+  constructor(private hotelService: HotelService, private route: Router) { }
 
   ngOnInit(): void {
     this.getCheckin();
@@ -213,5 +213,9 @@ export class ListHotelGuestsComponent implements OnInit {
         }
       })
     }
+  }
+
+  updateCheckin(document: string) {
+    this.route.navigate(['main', document]);
   }
 }

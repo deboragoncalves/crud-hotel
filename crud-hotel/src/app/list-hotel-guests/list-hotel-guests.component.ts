@@ -13,7 +13,7 @@ export class ListHotelGuestsComponent implements OnInit {
 
   hospede: Hospede[];
   checkIn: Checkin[];
-  
+
   dataList: Array<{ name: string, document: string, value: String }> = [];
   filteredDataList: Array<any> = [];
 
@@ -38,18 +38,31 @@ export class ListHotelGuestsComponent implements OnInit {
     this.hotelService.getCheckinList().subscribe(data => {
       this.checkIn = data;
 
-      console.log(data)
-
       this.calcDays(data)
 
-      // Preencher tabela 
+      // Popular lista
 
-      for (var i = 0; i < data.length; i++) {
-        this.dataList.push({name: data[i].hospede.nome, document: data[i].hospede.documento, value: this.values[i]})
-      }
+      var arrayGuests = [];
+
+        for (var i = 0; i < data.length; i++) {
+
+          arrayGuests.push(JSON.stringify(data[i].hospede));
+  
+        }
+
+        var uniqueGuests = new Set(arrayGuests);
+
+        uniqueGuests.forEach(guest => {
+          
+          var guestJSON = JSON.parse(guest)
+
+          this.dataList.push({name: guestJSON.nome, document: guestJSON.document, value: "0"})
+        })
+
     }, error => console.log(error))
   }
-
+        
+        
   calcDays(data: Array<Checkin>) {
     for (var i = 0; i < data.length; i++) {
 

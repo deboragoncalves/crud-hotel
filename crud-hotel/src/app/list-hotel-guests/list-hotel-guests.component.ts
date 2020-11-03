@@ -220,4 +220,31 @@ export class ListHotelGuestsComponent implements OnInit {
   updateCheckin(document: string) {
     this.route.navigate(['update-checkin', document]);
   }
+
+  deleteCheckin(document: string) {
+
+    this.hotelService.getGuestsList().subscribe(allGuests => {
+
+      for (var i = 0; i < allGuests.length; i++) {
+        if (document == allGuests[i].documento) {
+          
+          this.hotelService.getCheckinList().subscribe(allCheckin => {
+
+            for (var i = 0; i < allCheckin.length; i++) {
+
+              if (allCheckin[i].hospede.documento == document) {
+
+                this.hotelService.deleteCheckin(allCheckin[i].id).subscribe(checkinDelete => {
+
+                  console.log(checkinDelete)
+
+                  window.location.reload();
+                }, error => console.log(error))
+              }
+            }
+          }, error => console.log(error))
+        }
+      }
+    }, error => console.log(error))
+  }
 }

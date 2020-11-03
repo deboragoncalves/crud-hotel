@@ -25,6 +25,7 @@ export class NewCheckinComponent implements OnInit {
   saveCheckin(checkin: Checkin) {
 
     this.hotelService.createCheckin(checkin).subscribe(data => {
+      console.log(data)
 
       window.location.reload()
       

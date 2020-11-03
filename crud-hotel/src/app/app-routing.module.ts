@@ -7,7 +7,7 @@ import { UpdateCheckinComponent } from './update-checkin/update-checkin.componen
 
 const routes: Routes = [
   { path: 'person', component: NewPersonComponent},
-  { path: 'update-checkin', component: UpdateCheckinComponent},
+  { path: 'update-checkin/:document', component: UpdateCheckinComponent},
   { path: 'main', component: ListHotelGuestsComponent, outlet: 'main-view', pathMatch: 'full' },
   { path: 'main', component: NewCheckinComponent, outlet: 'main-view', pathMatch: 'full' }
 ];

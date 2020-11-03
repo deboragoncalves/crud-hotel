@@ -34,6 +34,7 @@ export class UpdateCheckinComponent implements OnInit {
   updateCheckin(id: number, checkin: Checkin) {
 
     this.hotelService.updateCheckin(id, checkin).subscribe(data => {
+      console.log(data)
 
       window.location.reload()
       

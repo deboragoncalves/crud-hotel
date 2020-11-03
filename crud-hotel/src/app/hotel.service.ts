@@ -42,7 +42,7 @@ export class HotelService {
   }
 
   deleteCheckin(id: number) {
-    return this.httpClient.delete(this.baseUrl + "delete/check/" + id)
+    return this.httpClient.delete(this.baseUrl + "delete/checkin/" + id)
   }
 
   deleteGuest(id: number) {

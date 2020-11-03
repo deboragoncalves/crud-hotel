@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HotelService } from '../hotel.service';
 import { Checkin } from '../models/checkin/checkin';
-import { Hospede } from '../models/person/hospede';
 
 @Component({
   selector: 'app-new-checkin',
@@ -23,14 +22,6 @@ export class NewCheckinComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  updateCheckin(id: number, checkin: Checkin) {
-
-      this.hotelService.updateCheckin(id, checkin).subscribe(data => {    
-    
-       window.location.reload()
-      }, error => console.log(error))
-  }
-
   saveCheckin(checkin: Checkin) {
 
     this.hotelService.createCheckin(checkin).subscribe(data => {
@@ -40,10 +31,6 @@ export class NewCheckinComponent implements OnInit {
     }, error => console.log(error))
   }
 
-  getCheckinById(guest: Hospede) {
-
-}
-
   getGuestById(dataGuest: string) {
   
     this.hotelService.getGuestsList().subscribe(allGuests => {
@@ -52,7 +39,13 @@ export class NewCheckinComponent implements OnInit {
         this.hotelService.getGuestById(allGuests[i].id).subscribe(guest => {
 
           if (guest.documento == dataGuest || guest.nome == dataGuest || guest.telefone == dataGuest) {
-            this.getCheckinById(guest);
+
+            this.checkin.adicionalVeiculo = this.plusCar
+            this.checkin.dataEntrada = this.dateIn
+            this.checkin.dataSaida = this.dateOut
+            this.checkin.hospede = guest
+
+            this.saveCheckin(this.checkin)
 
           }
 

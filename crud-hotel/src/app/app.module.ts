@@ -8,13 +8,15 @@ import { ListHotelGuestsComponent } from './list-hotel-guests/list-hotel-guests.
 import { NewCheckinComponent } from './new-checkin/new-checkin.component';
 import { NewPersonComponent } from './new-person/new-person.component';
 import { FormsModule } from '@angular/forms';
+import { UpdateCheckinComponent } from './update-checkin/update-checkin.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ListHotelGuestsComponent,
     NewCheckinComponent,
-    NewPersonComponent
+    NewPersonComponent,
+    UpdateCheckinComponent
   ],
   imports: [
     BrowserModule,

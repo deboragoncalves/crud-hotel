@@ -160,10 +160,12 @@ export class ListHotelGuestsComponent implements OnInit {
         for (var i = 0; i < this.checkIn.length; i++) {
 
           if (new Date(data.dataSaida).getFullYear() == new Date().getFullYear() || data.dataSaida == null) {
+            
             if (new Date(data.dataSaida).getMonth() == new Date().getMonth() || data.dataSaida == null) {
+              
               if (new Date(data.dataSaida).getDate() == new Date().getDate() || data.dataSaida == null) {
+                
                 if (new Date(data.dataSaida).getMinutes() < new Date().getMinutes() || data.dataSaida == null) {
-                  console.log(new Date(data.dataSaida).getDate() + " I: " + i + data.hospede.nome)
 
                   this.dataList.push({name: data.hospede.nome, document: data.hospede.documento, value: this.values[i]})
 
@@ -216,6 +218,6 @@ export class ListHotelGuestsComponent implements OnInit {
   }
 
   updateCheckin(document: string) {
-    this.route.navigate(['main', document]);
+    this.route.navigate(['update-checkin', document]);
   }
 }

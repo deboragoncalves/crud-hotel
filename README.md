@@ -28,7 +28,7 @@
 
 ##### 2.1. Run as Spring Boot.
 
-##### 2.2. Open the URL: http://localhost:8080/api/v1/guests .
+##### 2.2. Open the URL: http://localhost:8080/api/v1/guests 
 
 #### 3. Frontend:
 
@@ -38,4 +38,4 @@
 ###### npm start
 ###### ng serve -o
 
-##### 3.3. Open the URL: http://localhost:4200/api/v1/guests .
+##### 3.3. Open the URL: http://localhost:4200

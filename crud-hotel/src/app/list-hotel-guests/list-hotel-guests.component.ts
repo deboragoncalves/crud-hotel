@@ -14,13 +14,13 @@ export class ListHotelGuestsComponent implements OnInit {
   hospede: Hospede[];
   checkIn: Checkin[];
 
-  dataList: Array<{ name: string, document: string, value: String }> = [];
+  dataList: Array<{ name: string, document: string, value: number }> = [];
   filteredDataList: Array<any> = [];
 
   totalDays: Array<number> = [];
   countDayWeekends: Array<number> = [];
 
-  values: Array<String> = [];
+  values: Array<number> = [];
 
   weekDayValue: number = 120.00;
   weekendDayValue: number = 150.00;
@@ -56,16 +56,18 @@ export class ListHotelGuestsComponent implements OnInit {
           
           var guestJSON = JSON.parse(guest)
 
-          this.dataList.push({name: guestJSON.nome, document: guestJSON.documento, value: "0"})
+          this.dataList.push({name: guestJSON.nome, document: guestJSON.documento, value: this.values[i]})
         })
-
-        console.log(this.dataList)
 
     }, error => console.log(error))
   }
         
         
   calcDays(data: Array<Checkin>) {
+
+    console.log(data)
+    console.log("Aquii Chegou calcular dias ")
+
     for (var i = 0; i < data.length; i++) {
 
       // Diferenca de dias
@@ -152,18 +154,53 @@ export class ListHotelGuestsComponent implements OnInit {
         }
 
         valueTotal = valueTotalDays + valuePlusCarTotal + valuePlusHour
-
-        var stringTotalValue = valueTotal.toString().replace(".", ",")
       
-        this.values.push(stringTotalValue)
+        this.values.push(valueTotal)
 
       } else {
-        this.values[i] = ""
+
+        // Calcular 
+
       }
+
+      this.calcTotalValues(data);
+
+      console.log(this.values)
+      console.log("Valoresss ")
       
     }
 
-  } 
+  }
+  
+  calcTotalValues(data: Array<Checkin>) {
+
+    var arrayIdGuests: Array<number> = [];
+    var repeteadIdGuests: Array<number> = [];
+    var indexIds: Array<number> = [];
+
+    for (var i = 0; i < data.length; i++) {
+
+      arrayIdGuests.push(data[i].hospede.id);
+
+    }
+
+    arrayIdGuests.filter(function (value, index) { 
+      if (arrayIdGuests.indexOf(value) != index ) {
+        repeteadIdGuests.push(value, index);
+      }
+    })
+
+    for (var i = 0; i < arrayIdGuests.length; i++) {
+      for (var j = 0; j < repeteadIdGuests.length; j++) {
+        if (arrayIdGuests[i] == repeteadIdGuests[j]) {
+          console.log(repeteadIdGuests[j])
+          console.log(i)
+        }
+      }
+    }
+
+
+  }
 
   changeIsPresent(event) {
 
@@ -236,22 +273,33 @@ export class ListHotelGuestsComponent implements OnInit {
     this.route.navigate(['update-checkin']);
   }
 
-  deleteGuest(document: string) {
+  deleteGuest(name: string, document: string) {
 
-    this.hotelService.getGuestsList().subscribe(allGuests => {
+    this.hotelService.getCheckinList().subscribe(allCheckin => {
+      for (var i = 0; i < allCheckin.length; i++) {
+        if (allCheckin[i].hospede.nome == name && allCheckin[i].hospede.documento == document) {
+          this.hotelService.deleteCheckin(allCheckin[i].id).subscribe(deleteCheckin => {
+            console.log(deleteCheckin);
 
-      for (var i = 0; i < allGuests.length; i++) {
-        if (document == allGuests[i].documento) {
-          
-            this.hotelService.deleteGuest(allGuests[i].id).subscribe(guestDelete => {
+            this.hotelService.getGuestsList().subscribe(allGuests => {
 
-                console.log(guestDelete)
+              for (var i = 0; i < allGuests.length; i++) {
+                if (allGuests[i].nome == name && allGuests[i].documento == document) {
+                  this.hotelService.deleteGuest(allGuests[i].id).subscribe(deleteGuest => {
+                    console.log(deleteGuest)
 
-                window.location.reload();
-                
-              }, error => console.log(error))
-          }
+                    window.location.reload()
+
+                  }, error => console.log (error))
+                }
+              }
+              
+            },error => console.log(error))
+
+          })
+        }
       }
-    }, error => console.log(error))
+    })
+          
   }
 }

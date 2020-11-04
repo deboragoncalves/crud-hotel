@@ -232,8 +232,8 @@ export class ListHotelGuestsComponent implements OnInit {
     }
   }
 
-  updateCheckin(document: string) {
-    this.route.navigate(['update-checkin', document]);
+  updateCheckin() {
+    this.route.navigate(['update-checkin']);
   }
 
   deleteGuest(document: string) {

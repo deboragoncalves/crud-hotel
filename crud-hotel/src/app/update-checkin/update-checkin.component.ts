@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { HotelService } from '../hotel.service';
 import { Checkin } from '../models/checkin/checkin';
 import { Hospede } from '../models/person/hospede';
@@ -21,22 +21,19 @@ export class UpdateCheckinComponent implements OnInit {
   dateOut: string;
   plusCar: boolean;
 
-  constructor(private hotelService: HotelService, private route: ActivatedRoute) { }
+  constructor(private hotelService: HotelService, private router: Router) { }
 
   ngOnInit(): void {
-    this.document = this.route.snapshot.params['document']
-
-    if (this.document == undefined) {
-      return;
-    }
+  
   }
 
   updateCheckin(id: number, checkin: Checkin) {
 
     this.hotelService.updateCheckin(id, checkin).subscribe(data => {
+
       console.log(data)
 
-      window.location.reload()
+      this.router.navigate([''])
       
     }, error => console.log(error))
   }

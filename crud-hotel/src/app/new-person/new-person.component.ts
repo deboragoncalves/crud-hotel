@@ -12,7 +12,7 @@ export class NewPersonComponent implements OnInit {
 
   hospede: Hospede = new Hospede();
 
-  constructor(private hotelService: HotelService) { }
+  constructor(private hotelService: HotelService, private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -21,7 +21,8 @@ export class NewPersonComponent implements OnInit {
     this.hotelService.createGuest(this.hospede).subscribe(data => {
       console.log(data);
 
-      window.location.reload()
+      this.router.navigate([''])
+
    }, error => console.log(error))
   }
 

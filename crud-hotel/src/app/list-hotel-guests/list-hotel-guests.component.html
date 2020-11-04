@@ -26,8 +26,8 @@
                     <td class="table-row">{{ data.name }}</td>
                     <td class="table-row">{{ data.document }}</td>
                     <td class="table-row">{{ data.value }}</td>
-                    <td class="table-row"><button (click)="updateCheckin(data.document)" class="button update"><i class="fa fa-edit fa-2x"></i></button>
-                    <button (click)="deleteCheckin(data.document)" class="button delete"><i class="fa fa-trash fa-2x"></i></button></td>
+                    <td class="table-row"><button (click)="updateCheckin(data.document)" class="icon update"><i class="fa fa-edit"></i></button>
+                    <button (click)="deleteGuest(data.document)" class="icon delete"><i class="fa fa-trash"></i></button></td>
                 </tr>
             </tbody>
         </table>

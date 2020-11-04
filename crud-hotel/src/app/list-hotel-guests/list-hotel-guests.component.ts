@@ -56,8 +56,10 @@ export class ListHotelGuestsComponent implements OnInit {
           
           var guestJSON = JSON.parse(guest)
 
-          this.dataList.push({name: guestJSON.nome, document: guestJSON.document, value: "0"})
+          this.dataList.push({name: guestJSON.nome, document: guestJSON.documento, value: "0"})
         })
+
+        console.log(this.dataList)
 
     }, error => console.log(error))
   }
@@ -234,29 +236,21 @@ export class ListHotelGuestsComponent implements OnInit {
     this.route.navigate(['update-checkin', document]);
   }
 
-  deleteCheckin(document: string) {
+  deleteGuest(document: string) {
 
     this.hotelService.getGuestsList().subscribe(allGuests => {
 
       for (var i = 0; i < allGuests.length; i++) {
         if (document == allGuests[i].documento) {
           
-          this.hotelService.getCheckinList().subscribe(allCheckin => {
+            this.hotelService.deleteGuest(allGuests[i].id).subscribe(guestDelete => {
 
-            for (var i = 0; i < allCheckin.length; i++) {
+                console.log(guestDelete)
 
-              if (allCheckin[i].hospede.documento == document) {
-
-                this.hotelService.deleteCheckin(allCheckin[i].id).subscribe(checkinDelete => {
-
-                  console.log(checkinDelete)
-
-                  window.location.reload();
-                }, error => console.log(error))
-              }
-            }
-          }, error => console.log(error))
-        }
+                window.location.reload();
+                
+              }, error => console.log(error))
+          }
       }
     }, error => console.log(error))
   }

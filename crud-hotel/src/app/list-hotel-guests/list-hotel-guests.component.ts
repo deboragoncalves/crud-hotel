@@ -84,29 +84,22 @@ export class ListHotelGuestsComponent implements OnInit {
 
     for (var i = 0; i < data.length; i++) {
 
-      // Diferenca de dias
+      if (data[i].dataSaida == "") {
+        console.log("Zerou ")
+        console.log(data[i].dataSaida)
 
-      const dateInMs = new Date(data[i].dataEntrada).getTime()
-      const dateOutMs = new Date(data[i].dataSaida).getTime()
+        const dateInMs = new Date(data[i].dataEntrada).getTime()
+        const dateNowMs = new Date().getTime()
 
-      const msOneDay = 1000 * 60 * 60 * 24
-      this.totalDays.push(Math.round((dateOutMs - dateInMs)/msOneDay))
+        const msOneDay = 1000 * 60 * 60 * 24
+        this.totalDays.push(Math.round((dateNowMs - dateInMs)/msOneDay))
 
-      // Final de semana
+        // Final de semana
 
-      var count = 0
-      var dayWeek = 0
+        var count = 0
+        var dayWeek = 0
 
-      var dateInStart = new Date(data[i].dataEntrada);
-
-      dayWeek = dateInStart.getDay()
-
-      if (dayWeek == 0 || dayWeek == 6) {
-        count++;
-      }
-
-      while (dateInStart < new Date(data[i].dataSaida)) {
-        dateInStart.setDate(dateInStart.getDate() + 1)
+        var dateInStart = new Date(data[i].dataEntrada);
 
         dayWeek = dateInStart.getDay()
 
@@ -114,16 +107,67 @@ export class ListHotelGuestsComponent implements OnInit {
           count++;
         }
 
+        while (dateInStart < new Date()) {
+          dateInStart.setDate(dateInStart.getDate() + 1)
+
+          dayWeek = dateInStart.getDay()
+
+          if (dayWeek == 0 || dayWeek == 6) {
+            count++;
+          }
+
+        }
+
+        this.countDayWeekends.push(count)
+      } else {
+
+        console.log("Entrou ")
+        console.log(data[i].dataSaida)
+
+        // Diferenca de dias
+
+        const dateInMs = new Date(data[i].dataEntrada).getTime()
+        const dateOutMs = new Date(data[i].dataSaida).getTime()
+
+        const msOneDay = 1000 * 60 * 60 * 24
+        this.totalDays.push(Math.round((dateOutMs - dateInMs)/msOneDay))
+
+        // Final de semana
+
+        var count = 0
+        var dayWeek = 0
+
+        var dateInStart = new Date(data[i].dataEntrada);
+
+        dayWeek = dateInStart.getDay()
+
+        if (dayWeek == 0 || dayWeek == 6) {
+          count++;
+        }
+
+        while (dateInStart < new Date(data[i].dataSaida)) {
+          dateInStart.setDate(dateInStart.getDate() + 1)
+
+          dayWeek = dateInStart.getDay()
+
+          if (dayWeek == 0 || dayWeek == 6) {
+            count++;
+          }
+
+        }
+
+        this.countDayWeekends.push(count)
+
       }
 
-      this.countDayWeekends.push(count)
-    } 
+    }
 
     this.calcValues(data);
 
   }
 
   calcValues(data: Array<Checkin>) {
+
     var valueDayWeek = 0.00
     var valueDayWeekend = 0.00
     var valueTotalDays = 0.00
@@ -137,7 +181,6 @@ export class ListHotelGuestsComponent implements OnInit {
     var valueTotal = 0.00
 
     for (var i = 0; i < data.length; i++) {
-      if (data[i].dataSaida != null) {
 
         valueDayWeek = (this.totalDays[i] - this.countDayWeekends[i]) * this.weekDayValue
         valueDayWeekend = this.countDayWeekends[i] * this.weekendDayValue
@@ -146,6 +189,7 @@ export class ListHotelGuestsComponent implements OnInit {
         // Extras veículo e horário
 
         if (data[i].adicionalVeiculo) {
+
           valuePlusCarWeek = (this.totalDays[i] - this.countDayWeekends[i]) * this.plusCarWeek
           valuePlusCarWeekend = this.countDayWeekends[i] * this.plusCarWeekend
           valuePlusCarTotal = (valuePlusCarWeek + valuePlusCarWeekend)
@@ -163,29 +207,23 @@ export class ListHotelGuestsComponent implements OnInit {
             valuePlusHour = this.weekDayValue
           }
 
-        } 
-
         }
+      }
 
         valueTotal = valueTotalDays + valuePlusCarTotal + valuePlusHour
 
         this.valuesTotal.push(valueTotal)
 
         this.arrayIds.push(data[i].hospede.id)
-      
-      } else {
-
-        // Calcular 
-
-      }
-
-      this.calcTotalValues(this.arrayIds);
 
     }
+
+    this.calcTotalValues(this.arrayIds);
 
   }
   
   calcTotalValues(arrayIds: Array<number>) {
+    console.log(this.valuesTotal)
 
     for (var i = 0; i < arrayIds.length; i++) {
 

@@ -14,10 +14,12 @@ export class ListHotelGuestsComponent implements OnInit {
   hospede: Hospede[];
   checkIn: Checkin[];
 
-  dataList: Array<{ name: string, document: string, value: number }> = [];
+  dataList: Array<any> = [];
   filteredDataList: Array<any> = [];
 
   valuesTotal: Array<any> = [];
+  arrayIds: Array<number> = [];
+  valuesFinal: Array<any> = [];
 
   totalDays: Array<number> = [];
   countDayWeekends: Array<number> = [];
@@ -25,7 +27,7 @@ export class ListHotelGuestsComponent implements OnInit {
   weekDayValue: number = 120.00;
   weekendDayValue: number = 150.00;
 
-  plusCarweek: number = 15.00;
+  plusCarWeek: number = 15.00;
   plusCarWeekend: number = 20.00;
 
   constructor(private hotelService: HotelService, private route: Router) { }
@@ -52,17 +54,30 @@ export class ListHotelGuestsComponent implements OnInit {
 
         var uniqueGuests = new Set(arrayGuests);
 
-        uniqueGuests.forEach(guest => {
-          
-          var guestJSON = JSON.parse(guest)
+        var uniqueValues = new Set(this.valuesTotal)
+        uniqueValues.delete(0)
 
-          this.dataList.push({name: guestJSON.nome, document: guestJSON.documento, value: this.valuesTotal[i]})
+        var newArrayGuests: Array<any> = []
+        var newArrayValues: Array<any> = []
+
+        uniqueGuests.forEach(guest => {
+          newArrayGuests.push(guest)
         })
+
+        uniqueValues.forEach(value => {
+          newArrayValues.push(value)
+        })
+
+        for (var i = 0; i < newArrayGuests.length; i++) {
+          var guestJSON = JSON.parse(newArrayGuests[i])
+
+          this.dataList.push({name: guestJSON.nome, document: guestJSON.documento, value: newArrayValues[i] })
+
+        }
 
     }, error => console.log(error))
   }
-        
-        
+      
   calcDays(data: Array<Checkin>) {
 
     console.log(data)
@@ -131,7 +146,7 @@ export class ListHotelGuestsComponent implements OnInit {
         // Extras veículo e horário
 
         if (data[i].adicionalVeiculo) {
-          valuePlusCarWeek = (this.totalDays[i] - this.countDayWeekends[i]) * this.plusCarweek
+          valuePlusCarWeek = (this.totalDays[i] - this.countDayWeekends[i]) * this.plusCarWeek
           valuePlusCarWeekend = this.countDayWeekends[i] * this.plusCarWeekend
           valuePlusCarTotal = (valuePlusCarWeek + valuePlusCarWeekend)
 
@@ -154,8 +169,9 @@ export class ListHotelGuestsComponent implements OnInit {
 
         valueTotal = valueTotalDays + valuePlusCarTotal + valuePlusHour
 
-        this.calcTotalValues(valueTotal, data[i], data);
+        this.valuesTotal.push(valueTotal)
 
+        this.arrayIds.push(data[i].hospede.id)
       
       } else {
 
@@ -163,47 +179,31 @@ export class ListHotelGuestsComponent implements OnInit {
 
       }
 
-      
+      this.calcTotalValues(this.arrayIds);
+
     }
 
   }
   
-  calcTotalValues(valueTotal: number, checkin: Checkin, arrayCheckin: Array<Checkin>) {
+  calcTotalValues(arrayIds: Array<number>) {
 
-    var valueTotalGuest = 0
-    var arrayIdGuests: Array<number> = [];
-    var repeteadIdGuests: Array<any> = [];
+    for (var i = 0; i < arrayIds.length; i++) {
 
-    for (var i = 0; i < arrayCheckin.length; i++) {
-      arrayIdGuests.push(arrayCheckin[i].id)
+      // Retorna o índice do primeiro item
+
+      var indexId = arrayIds.indexOf(arrayIds[i])
+
+      // Indice id x atual
+
+      if (i !== indexId) {
+
+        this.valuesTotal[indexId] = this.valuesTotal[i] + this.valuesTotal[indexId]
+        this.valuesTotal[i] = 0
+
+      } 
+      
     }
 
-    arrayIdGuests.filter(function (value, index) { 
-      if (arrayIdGuests.indexOf(value) != index ) {
-        repeteadIdGuests.push(value);
-      }
-    })
-
-    console.log(valueTotal)
-    console.log(checkin)
-
-    this.hotelService.getGuestsList().subscribe(allGuests => {
-      for (var i = 0; i < allGuests.length; i++) {
-          for (var i = 0; i < arrayCheckin.length; i++) {
-            if ((arrayCheckin[i].hospede.id == allGuests[i].id) && repeteadIdGuests.includes(allGuests[i].id)) {
-              console.log(arrayCheckin[i].hospede.id)
-              console.log("Entrou!!!!")
-
-              valueTotalGuest += valueTotal
-
-            } else {
-              valueTotalGuest = valueTotal
-            }
-          }
-      }
-
-      this.valuesTotal.push(valueTotalGuest);
-    }, error => console.log(error))
   }
 
   changeIsPresent(event) {
@@ -211,29 +211,7 @@ export class ListHotelGuestsComponent implements OnInit {
     if (event.target.value) {
       this.dataList = []
 
-      this.filteredDataList = this.checkIn.filter(data => {
-
-        for (var i = 0; i < this.checkIn.length; i++) {
-
-          if (new Date(data.dataSaida).getFullYear() == new Date().getFullYear() || data.dataSaida == null) {
-            
-            if (new Date(data.dataSaida).getMonth() == new Date().getMonth() || data.dataSaida == null) {
-              
-              if (new Date(data.dataSaida).getDate() == new Date().getDate() || data.dataSaida == null) {
-                
-                if (new Date(data.dataSaida).getMinutes() < new Date().getMinutes() || data.dataSaida == null) {
-
-                  this.dataList.push({name: data.hospede.nome, document: data.hospede.documento, value: this.valuesTotal[i]})
-
-                  console.log(this.dataList)
-                  return this.dataList 
-                }
-              } 
-            }
-          
-          }
-        }
-      })
+      // refazer
     }
   }
 
@@ -241,35 +219,8 @@ export class ListHotelGuestsComponent implements OnInit {
 
     if (event.target.value) { 
       this.dataList = []   
-
-      this.filteredDataList = this.checkIn.filter(data => {
-          for (var i = 0; i < this.checkIn.length; i++) {
-            if (new Date(data.dataSaida).getFullYear() < new Date().getFullYear() && data.dataSaida != null) {
-
-              this.dataList.push({name: data.hospede.nome, document: data.hospede.documento, value: this.valuesTotal[i]})
-
-              return this.dataList  
-
-            } else if (new Date(data.dataSaida).getMonth() < new Date().getMonth() && data.dataSaida != null) {
-
-              this.dataList.push({name: data.hospede.nome, document: data.hospede.documento, value: this.valuesTotal[i]})
-
-              return this.dataList 
-            
-          } else if ((new Date(data.dataSaida).getDate() < new Date().getDate()) && data.dataSaida != null) {
-
-              this.dataList.push({name: data.hospede.nome, document: data.hospede.documento, value: this.valuesTotal[i]})
-
-              return this.dataList 
-          } else if ((new Date(data.dataSaida).getDate() == new Date().getDate()) 
-          && (new Date(data.dataSaida).getMinutes() < new Date().getMinutes()) && data.dataSaida != null) {
-
-            this.dataList.push({name: data.hospede.nome, document: data.hospede.documento, value: this.valuesTotal[i]})
-
-            return this.dataList
-          }
-        }
-      })
+      // refazer
+     
     }
   }
 

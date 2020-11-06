@@ -24,6 +24,7 @@ export class ListHotelGuestsComponent implements OnInit {
   valuesFinal: Array<any> = [];
 
   totalDays: Array<number> = [];
+
   countDayWeekends: Array<number> = [];
 
   weekDayValue: number = 120.00;
@@ -95,7 +96,7 @@ export class ListHotelGuestsComponent implements OnInit {
 
     for (var i = 0; i < data.length; i++) {
 
-      if (data[i].dataSaida == "") {
+      if (data[i].dataSaida == "" || data[i].dataSaida == null) {
 
         const dateInMs = new Date(data[i].dataEntrada).getTime()
         const dateNowMs = new Date().getTime()
@@ -128,8 +129,8 @@ export class ListHotelGuestsComponent implements OnInit {
         }
 
         this.countDayWeekends.push(count)
-      } else {
 
+      } else {
         // Diferenca de dias
 
         const dateInMs = new Date(data[i].dataEntrada).getTime()
@@ -188,24 +189,24 @@ export class ListHotelGuestsComponent implements OnInit {
 
     for (var i = 0; i < data.length; i++) {
 
-        valueDayWeek = (this.totalDays[i] - this.countDayWeekends[i]) * this.weekDayValue
-        valueDayWeekend = this.countDayWeekends[i] * this.weekendDayValue
-        valueTotalDays = (valueDayWeek + valueDayWeekend)
+      valueDayWeek = (this.totalDays[i] - this.countDayWeekends[i]) * this.weekDayValue
+      valueDayWeekend = this.countDayWeekends[i] * this.weekendDayValue
+      valueTotalDays = (valueDayWeek + valueDayWeekend)
+    
+      // Extras veículo e horário
 
-        // Extras veículo e horário
+      if (data[i].adicionalVeiculo) {
 
-        if (data[i].adicionalVeiculo) {
+        valuePlusCarWeek = (this.totalDays[i] - this.countDayWeekends[i]) * this.plusCarWeek
+        valuePlusCarWeekend = this.countDayWeekends[i] * this.plusCarWeekend
+        valuePlusCarTotal = (valuePlusCarWeek + valuePlusCarWeekend)
 
-          valuePlusCarWeek = (this.totalDays[i] - this.countDayWeekends[i]) * this.plusCarWeek
-          valuePlusCarWeekend = this.countDayWeekends[i] * this.plusCarWeekend
-          valuePlusCarTotal = (valuePlusCarWeek + valuePlusCarWeekend)
+      }
 
-        }
+      if (new Date(data[i].dataSaida).getHours() >= 16) {
 
-        if (new Date(data[i].dataSaida).getHours() >= 16) {
-
-          if ((new Date(data[i].dataSaida).getHours() == 16 && new Date(data[i].dataSaida).getMinutes() > 30)
-          || new Date(data[i].dataSaida).getHours() > 16) {
+        if ((new Date(data[i].dataSaida).getHours() == 16 && new Date(data[i].dataSaida).getMinutes() > 30)
+        || new Date(data[i].dataSaida).getHours() > 16) {
 
           if (new Date(data[i].dataSaida).getDay() == 0 || new Date(data[i].dataSaida).getDay() == 6) {
             valuePlusHour = this.weekendDayValue
@@ -214,22 +215,21 @@ export class ListHotelGuestsComponent implements OnInit {
           }
 
         }
-      }
-
-        valueTotal = valueTotalDays + valuePlusCarTotal + valuePlusHour
-
-        this.valuesTotal.push(valueTotal)
-
-        this.arrayIds.push(data[i].hospede.id)
-
     }
+
+    valueTotal = valueTotalDays + valuePlusCarTotal + valuePlusHour
+
+    this.valuesTotal.push(valueTotal)
+
+    this.arrayIds.push(data[i].hospede.id)
+
+  }
 
     this.calcTotalValues(this.arrayIds);
 
   }
   
   calcTotalValues(arrayIds: Array<number>) {
-    console.log(this.valuesTotal)
 
     for (var i = 0; i < arrayIds.length; i++) {
 
@@ -265,7 +265,7 @@ export class ListHotelGuestsComponent implements OnInit {
 
                 var jsonParse = JSON.parse(this.newArrayGuests[j])
 
-                if (jsonParse.documento == this.checkIn[i].hospede.documento && this.checkIn[i].dataSaida == "") {
+                if (jsonParse.documento == this.checkIn[i].hospede.documento && (this.checkIn[i].dataSaida == "" || this.checkIn[i].dataSaida == null)) {
                   this.dataList.push({ name: jsonParse.nome, document: jsonParse.documento, value: this.newArrayValues[j] })
                 }                
               }
@@ -273,8 +273,6 @@ export class ListHotelGuestsComponent implements OnInit {
             }
           
             this.dataList = this.dataList.filter(function (dataList) {
-              console.log("Aqui true " + this[JSON.stringify(dataList)])
-              console.log("Aqui false " + !this[JSON.stringify(dataList)])
               return !this[JSON.stringify(dataList)] && (this[JSON.stringify(dataList)] = true);
             }, Object.create(null))
             
@@ -307,7 +305,7 @@ export class ListHotelGuestsComponent implements OnInit {
 
               var jsonParse = JSON.parse(this.newArrayGuests[j])
 
-              if (jsonParse.documento == this.checkIn[i].hospede.documento && this.checkIn[i].dataSaida !== "") {
+              if (jsonParse.documento == this.checkIn[i].hospede.documento && (this.checkIn[i].dataSaida !== "" && this.checkIn[i].dataSaida !== null)) {
                 this.dataList.push({ name: jsonParse.nome, document: jsonParse.documento, value: this.newArrayValues[j] })
               }
 
@@ -315,19 +313,11 @@ export class ListHotelGuestsComponent implements OnInit {
 
           }
 
-          // Remover objetos duplicados.
-          // Quando está duplicado, retorna false; o contrário, true
-
           this.dataList = this.dataList.filter(function (dataList) {
-            console.log("Aqui true " + this[JSON.stringify(dataList)])
-            console.log("Aqui false " + !this[JSON.stringify(dataList)])
             return !this[JSON.stringify(dataList)] && (this[JSON.stringify(dataList)] = true);
           }, Object.create(null))
           
           console.log(this.dataList)
-
-            // Ordenar array, comparando o item atual com o próximo.
-            // Reverse: ordem decrescente
 
             this.dataList.sort(function(itemA, itemB) {
               return itemA.value - itemB.value
@@ -363,12 +353,16 @@ export class ListHotelGuestsComponent implements OnInit {
                 }
               }
               
-            },error => console.log(error))
+            }, error => console.log(error))
 
           })
         }
       }
     })
           
+  }
+
+  page(event) {
+    console.log(event.target.value)
   }
 }

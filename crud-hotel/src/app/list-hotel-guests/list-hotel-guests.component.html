@@ -22,13 +22,14 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let data of dataList"> 
+                <tr *ngFor="let data of dataList | paginate: { itemsPerPage: 5, currentPage: page }"> 
                     <td class="table-row">{{ data.name }}</td>
                     <td class="table-row">{{ data.document }}</td>
                     <td class="table-row">{{ data.value }}</td>
                     <td class="table-row"><button (click)="updateCheckin()" class="icon update"><i class="fa fa-edit"></i></button>
                     <button (click)="deleteGuest(data.name, data.document)" class="icon delete"><i class="fa fa-trash"></i></button></td>
                 </tr>
+                <pagination-controls (pageChange)="page = $event"></pagination-controls>
             </tbody>
         </table>
     </div>

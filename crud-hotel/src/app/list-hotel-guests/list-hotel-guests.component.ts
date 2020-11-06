@@ -1,3 +1,4 @@
+import { templateJitUrl } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HotelService } from '../hotel.service';
@@ -15,7 +16,9 @@ export class ListHotelGuestsComponent implements OnInit {
   checkIn: Checkin[];
 
   dataList: Array<any> = [];
-  filteredDataList: Array<any> = [];
+
+  newArrayGuests: Array<any> = []
+  newArrayValues: Array<any> = []
 
   valuesTotal: Array<any> = [];
   arrayIds: Array<number> = [];
@@ -29,6 +32,9 @@ export class ListHotelGuestsComponent implements OnInit {
 
   plusCarWeek: number = 15.00;
   plusCarWeekend: number = 20.00;
+
+  present: string;
+  notPresent: string;
 
   constructor(private hotelService: HotelService, private route: Router) { }
 
@@ -57,21 +63,18 @@ export class ListHotelGuestsComponent implements OnInit {
         var uniqueValues = new Set(this.valuesTotal)
         uniqueValues.delete(0)
 
-        var newArrayGuests: Array<any> = []
-        var newArrayValues: Array<any> = []
-
         uniqueGuests.forEach(guest => {
-          newArrayGuests.push(guest)
+          this.newArrayGuests.push(guest)
         })
 
         uniqueValues.forEach(value => {
-          newArrayValues.push(value)
+          this.newArrayValues.push(value)
         })
 
-        for (var i = 0; i < newArrayGuests.length; i++) {
-          var guestJSON = JSON.parse(newArrayGuests[i])
+        for (var i = 0; i < this.newArrayGuests.length; i++) {
+          var guestJSON = JSON.parse(this.newArrayGuests[i])
 
-          this.dataList.push({name: guestJSON.nome, document: guestJSON.documento, value: newArrayValues[i] })
+          this.dataList.push({name: guestJSON.nome, document: guestJSON.documento, value: this.newArrayValues[i] })
 
         }
 
@@ -85,8 +88,6 @@ export class ListHotelGuestsComponent implements OnInit {
     for (var i = 0; i < data.length; i++) {
 
       if (data[i].dataSaida == "") {
-        console.log("Zerou ")
-        console.log(data[i].dataSaida)
 
         const dateInMs = new Date(data[i].dataEntrada).getTime()
         const dateNowMs = new Date().getTime()
@@ -120,9 +121,6 @@ export class ListHotelGuestsComponent implements OnInit {
 
         this.countDayWeekends.push(count)
       } else {
-
-        console.log("Entrou ")
-        console.log(data[i].dataSaida)
 
         // Diferenca de dias
 
@@ -246,20 +244,72 @@ export class ListHotelGuestsComponent implements OnInit {
 
   changeIsPresent(event) {
 
-    if (event.target.value) {
-      this.dataList = []
+    this.dataList = []
 
-      // refazer
+    this.present = event.target.value
+    this.notPresent = null
+
+    if (this.present == "on") {
+      
+          for (var i = 0; i < this.checkIn.length; i++) {
+
+              for (var j = 0; j < this.newArrayGuests.length; j++) {
+
+                var jsonParse = JSON.parse(this.newArrayGuests[j])
+
+                if (jsonParse.documento == this.checkIn[i].hospede.documento && this.checkIn[i].dataSaida == "") {
+                  this.dataList.push({ name: jsonParse.nome, document: jsonParse.documento, value: this.newArrayValues[j] })
+                }                
+              }
+              
+            }
+          
+            this.dataList = this.dataList.filter(function (dataList) {
+              console.log("Aqui true " + this[JSON.stringify(dataList)])
+              console.log("Aqui false " + !this[JSON.stringify(dataList)])
+              return !this[JSON.stringify(dataList)] && (this[JSON.stringify(dataList)] = true);
+            }, Object.create(null))
+            
+            console.log(this.dataList)
+            
     }
   }
 
   changeNotPresent(event) {
 
-    if (event.target.value) { 
-      this.dataList = []   
-      // refazer
-     
-    }
+    this.dataList = []
+
+    this.present = null
+    this.notPresent = event.target.value
+
+    if (this.notPresent == "on") { 
+      
+        for (var i = 0; i < this.checkIn.length; i++) {
+
+            for (var j = 0; j < this.newArrayGuests.length; j++) {
+
+              var jsonParse = JSON.parse(this.newArrayGuests[j])
+
+              if (jsonParse.documento == this.checkIn[i].hospede.documento && this.checkIn[i].dataSaida !== "") {
+                this.dataList.push({ name: jsonParse.nome, document: jsonParse.documento, value: this.newArrayValues[j] })
+              }
+
+            }
+
+          }
+
+          // Remover objetos duplicados.
+          // Quando está duplicado, retorna false; o contrário, true
+
+          this.dataList = this.dataList.filter(function (dataList) {
+            console.log("Aqui true " + this[JSON.stringify(dataList)])
+            console.log("Aqui false " + !this[JSON.stringify(dataList)])
+            return !this[JSON.stringify(dataList)] && (this[JSON.stringify(dataList)] = true);
+          }, Object.create(null))
+          
+          console.log(this.dataList)
+          
+    } 
   }
 
   updateCheckin() {

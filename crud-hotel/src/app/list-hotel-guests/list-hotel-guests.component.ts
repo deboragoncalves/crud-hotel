@@ -1,4 +1,3 @@
-import { templateJitUrl } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HotelService } from '../hotel.service';
@@ -77,6 +76,15 @@ export class ListHotelGuestsComponent implements OnInit {
           this.dataList.push({name: guestJSON.nome, document: guestJSON.documento, value: this.newArrayValues[i] })
 
         }
+
+        // Ordenar array, comparando o item atual com o próximo.
+        // Reverse: ordem decrescente
+
+        this.dataList.sort(function(itemA, itemB) {
+            return itemA.value - itemB.value
+        });
+
+        this.dataList.reverse();
 
     }, error => console.log(error))
   }
@@ -271,6 +279,15 @@ export class ListHotelGuestsComponent implements OnInit {
             }, Object.create(null))
             
             console.log(this.dataList)
+
+            // Ordenar array, comparando o item atual com o próximo.
+            // Reverse: ordem decrescente
+
+            this.dataList.sort(function(itemA, itemB) {
+              return itemA.value - itemB.value
+            });
+
+            this.dataList.reverse();
             
     }
   }
@@ -308,6 +325,15 @@ export class ListHotelGuestsComponent implements OnInit {
           }, Object.create(null))
           
           console.log(this.dataList)
+
+            // Ordenar array, comparando o item atual com o próximo.
+            // Reverse: ordem decrescente
+
+            this.dataList.sort(function(itemA, itemB) {
+              return itemA.value - itemB.value
+            });
+
+            this.dataList.reverse();
           
     } 
   }

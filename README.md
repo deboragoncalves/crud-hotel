@@ -1,4 +1,4 @@
-# Test Senior
+# Crud Hotel
 
 ## This project is a full stack application, where was done a crud of a hotel as a test for Developer in Senior. In the front-end, the techs used were Angular 10 and SASS; in the other hand, in the back-end, it was used Java (Spring Boot) and PostgreSQL.
 

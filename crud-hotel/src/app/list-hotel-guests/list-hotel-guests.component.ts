@@ -40,6 +40,11 @@ export class ListHotelGuestsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getCheckin();
+
+    // Inicializar inputs vazio
+
+    this.present = ""
+    this.notPresent = ""
   }
 
   getCheckin() {

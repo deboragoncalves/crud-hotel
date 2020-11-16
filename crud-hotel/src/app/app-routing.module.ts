@@ -3,9 +3,11 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { NewPersonComponent } from './new-person/new-person.component';
 import { UpdateCheckinComponent } from './update-checkin/update-checkin.component';
+import { UpdateGuestComponent } from './update-guest/update-guest.component';
 
 const routes: Routes = [
-  { path: 'person', component: NewPersonComponent},
+  { path: 'guest', component: NewPersonComponent},
+  { path: 'update-guest', component: UpdateGuestComponent},
   { path: 'update-checkin', component: UpdateCheckinComponent},
   { path: '', component: HomeComponent, pathMatch: 'full'}
 ];

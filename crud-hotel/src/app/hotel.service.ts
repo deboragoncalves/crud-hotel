@@ -37,6 +37,10 @@ export class HotelService {
     return this.httpClient.post<Hospede>(this.baseUrl + "guests/post", guest);
   }
 
+  updateGuest(id: number, guest: Hospede): Observable<Hospede> {
+    return this.httpClient.put<Hospede>(this.baseUrl + "guest/" + id, guest);
+  }
+
   updateCheckin(id: number, checkin: Checkin): Observable<Checkin> {
     return this.httpClient.put<Checkin>(this.baseUrl + "checkin/" + id, checkin);
   }

@@ -11,6 +11,7 @@ import { NewPersonComponent } from './new-person/new-person.component';
 import { FormsModule } from '@angular/forms';
 import { UpdateCheckinComponent } from './update-checkin/update-checkin.component';
 import { HomeComponent } from './home/home.component';
+import { UpdateGuestComponent } from './update-guest/update-guest.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { HomeComponent } from './home/home.component';
     NewCheckinComponent,
     NewPersonComponent,
     UpdateCheckinComponent,
-    HomeComponent
+    HomeComponent,
+    UpdateGuestComponent
   ],
   imports: [
     BrowserModule,

@@ -101,6 +101,24 @@ public class HotelController {
 				
 	}
 	
+	@PutMapping(value="/guest/{id}")
+	public ResponseEntity<Hospede> updateGuest(@PathVariable Long id, @RequestBody Hospede guestUpdate) {
+		Hospede guest = hospedeRepository.findById(id).orElse(null);
+		
+		if (guest == null) {
+			return ResponseEntity.notFound().build();
+		}
+		
+		guest.setId(guestUpdate.getId());
+		guest.setNome(guestUpdate.getNome());
+		guest.setDocumento(guestUpdate.getDocumento());
+		guest.setTelefone(guestUpdate.getTelefone());
+		
+		Hospede newGuestUpdate = hospedeRepository.save(guest);
+		return ResponseEntity.ok(newGuestUpdate);
+				
+	}
+	
 	// Delete
 	
 	@DeleteMapping("/delete/guest/{id}")

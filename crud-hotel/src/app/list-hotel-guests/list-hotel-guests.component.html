@@ -29,12 +29,9 @@
                     <td class="table-row"><button (click)="updateCheckin()" class="icon update"><i class="fa fa-edit"></i></button>
                     <button (click)="deleteGuest(data.name, data.document)" class="icon delete"><i class="fa fa-trash"></i></button></td>
                 </tr>
-                <pagination-controls (pageChange)="page = $event"></pagination-controls>
+                <pagination-controls class="pagination" (pageChange)="page = $event"></pagination-controls>
             </tbody>
         </table>
     </div>
-    <div class="buttons">
-        <button class="button previous"><i class="fa fa-arrow-left fa-1x"></i>Previous</button>
-        <button class="button next">Next<i class="fa fa-arrow-right fa-1x"></i></button>
-    </div>
+    
 </div>

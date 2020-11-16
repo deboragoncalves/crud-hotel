@@ -11,6 +11,9 @@ import { Hospede } from '../models/person/hospede';
 })
 export class ListHotelGuestsComponent implements OnInit {
 
+  present: string;
+  notPresent: string;
+
   hospede: Hospede[];
   checkIn: Checkin[];
 
@@ -32,9 +35,6 @@ export class ListHotelGuestsComponent implements OnInit {
 
   plusCarWeek: number = 15.00;
   plusCarWeekend: number = 20.00;
-
-  present: string;
-  notPresent: string;
 
   constructor(private hotelService: HotelService, private route: Router) { }
 
@@ -131,6 +131,7 @@ export class ListHotelGuestsComponent implements OnInit {
         this.countDayWeekends.push(count)
 
       } else {
+
         // Diferenca de dias
 
         const dateInMs = new Date(data[i].dataEntrada).getTime()
@@ -254,10 +255,12 @@ export class ListHotelGuestsComponent implements OnInit {
 
     this.dataList = []
 
-    this.present = event.target.value
-    this.notPresent = null
+    // Setar valores input
 
-    if (this.present == "on") {
+    this.present = "1";
+    this.notPresent = "0";
+
+    if (event.target.value == 'on') {
       
           for (var i = 0; i < this.checkIn.length; i++) {
 
@@ -294,10 +297,12 @@ export class ListHotelGuestsComponent implements OnInit {
 
     this.dataList = []
 
-    this.present = null
-    this.notPresent = event.target.value
+    // Setar valores input
 
-    if (this.notPresent == "on") { 
+    this.present = "0";
+    this.notPresent = "1";
+
+    if (event.target.value == 'on') { 
       
         for (var i = 0; i < this.checkIn.length; i++) {
 

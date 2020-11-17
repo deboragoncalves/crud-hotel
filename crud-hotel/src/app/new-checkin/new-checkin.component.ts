@@ -23,7 +23,7 @@ export class NewCheckinComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  saveCheckin(checkin: Checkin) {
+  createCheckin(checkin: Checkin) {
 
     this.hotelService.createCheckin(checkin).subscribe(data => {
 
@@ -40,16 +40,27 @@ export class NewCheckinComponent implements OnInit {
 
       for (var i = 0; i < allGuests.length; i++) {
 
+        // Pegar hospede pelo id
+
         this.hotelService.getGuestById(allGuests[i].id).subscribe(guest => {
 
+          // Se um dos dados do hospede encontrado é o mesmo do indicado no input pelo usuário, criar novo objeto e fazer o post
+
           if (guest.document == dataGuest || guest.name == dataGuest || guest.phone == dataGuest) {
+
+            // Novo objeto 
 
             this.checkin.plusCar = this.plusCar
             this.checkin.dateIn = this.dateIn
             this.checkin.dateOut = this.dateOut
             this.checkin.guest = guest
 
-            this.saveCheckin(this.checkin)
+            this.createCheckin(this.checkin)
+
+          } else {
+
+            alert("Este hóspede não está incluído no sistema. Faça o cadastro do mesmo e, depois, o checkin.");
+            return; 
 
           }
 

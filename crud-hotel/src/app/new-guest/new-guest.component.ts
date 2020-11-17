@@ -27,7 +27,6 @@ export class NewGuestComponent implements OnInit {
 
     // Novo objeto
 
-    this.guest.id = 0;
     this.guest.name = name;
     this.guest.document = document;
     this.guest.phone = phone;
@@ -38,7 +37,7 @@ export class NewGuestComponent implements OnInit {
 
       // Home
 
-      this.router.navigate['']
+      this.router.navigate(['']);
 
     }, error => console.log(error))
 
@@ -76,9 +75,6 @@ export class NewGuestComponent implements OnInit {
       return;
 
     }
-
-
-
 
   }
 

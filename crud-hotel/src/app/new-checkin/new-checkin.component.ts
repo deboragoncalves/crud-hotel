@@ -7,6 +7,7 @@ import { Checkin } from '../models/checkin/checkin';
   templateUrl: './new-checkin.component.html',
   styleUrls: ['./new-checkin.component.sass']
 })
+
 export class NewCheckinComponent implements OnInit {
 
   checkin: Checkin = new Checkin();
@@ -25,6 +26,7 @@ export class NewCheckinComponent implements OnInit {
   saveCheckin(checkin: Checkin) {
 
     this.hotelService.createCheckin(checkin).subscribe(data => {
+
       console.log(data)
 
       window.location.reload()
@@ -37,14 +39,15 @@ export class NewCheckinComponent implements OnInit {
     this.hotelService.getGuestsList().subscribe(allGuests => {
 
       for (var i = 0; i < allGuests.length; i++) {
+
         this.hotelService.getGuestById(allGuests[i].id).subscribe(guest => {
 
-          if (guest.documento == dataGuest || guest.nome == dataGuest || guest.telefone == dataGuest) {
+          if (guest.document == dataGuest || guest.name == dataGuest || guest.phone == dataGuest) {
 
-            this.checkin.adicionalVeiculo = this.plusCar
-            this.checkin.dataEntrada = this.dateIn
-            this.checkin.dataSaida = this.dateOut
-            this.checkin.hospede = guest
+            this.checkin.plusCar = this.plusCar
+            this.checkin.dateIn = this.dateIn
+            this.checkin.dateOut = this.dateOut
+            this.checkin.guest = guest
 
             this.saveCheckin(this.checkin)
 
@@ -59,6 +62,7 @@ export class NewCheckinComponent implements OnInit {
   onSubmit() {
 
     if (this.plusCar == undefined) {
+
       this.plusCar = false
     }
 
@@ -67,8 +71,10 @@ export class NewCheckinComponent implements OnInit {
       this.getGuestById(this.dataGuest)
 
     } else {
+
       alert("O campo Documento é obrigatório")
       return;
+      
     }
     
   }

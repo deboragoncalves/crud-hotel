@@ -1,9 +1,9 @@
-import { Hospede } from '../person/hospede';
+import { Guest } from '../guest/guest';
 
 export class Checkin {
-    hospede: Hospede;
+    guest: Guest;
     id: number;
-    dataEntrada: string;
-    dataSaida: string;
-    adicionalVeiculo: boolean;
+    dateIn: string;
+    dateOut: string;
+    plusCar: boolean;
 }

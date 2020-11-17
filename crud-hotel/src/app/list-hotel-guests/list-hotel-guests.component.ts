@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HotelService } from '../hotel.service';
 import { Checkin } from '../models/checkin/checkin';
-import { Hospede } from '../models/person/hospede';
+import { Guest } from '../models/guest/guest';
 
 @Component({
   selector: 'app-list-hotel-guests',
@@ -14,7 +14,7 @@ export class ListHotelGuestsComponent implements OnInit {
   present: string;
   notPresent: string;
 
-  hospede: Hospede[];
+  guest: Guest[];
   checkIn: Checkin[];
 
   dataList: Array<any> = [];
@@ -59,7 +59,7 @@ export class ListHotelGuestsComponent implements OnInit {
 
         for (var i = 0; i < data.length; i++) {
 
-          arrayGuests.push(JSON.stringify(data[i].hospede));
+          arrayGuests.push(JSON.stringify(data[i].guest));
   
         }
 
@@ -79,7 +79,7 @@ export class ListHotelGuestsComponent implements OnInit {
         for (var i = 0; i < this.newArrayGuests.length; i++) {
           var guestJSON = JSON.parse(this.newArrayGuests[i])
 
-          this.dataList.push({name: guestJSON.nome, document: guestJSON.documento, value: this.newArrayValues[i] })
+          this.dataList.push({name: guestJSON.name, document: guestJSON.document, value: this.newArrayValues[i] })
 
         }
 
@@ -101,9 +101,9 @@ export class ListHotelGuestsComponent implements OnInit {
 
     for (var i = 0; i < data.length; i++) {
 
-      if (data[i].dataSaida == "" || data[i].dataSaida == null) {
+      if (data[i].dateOut == "" || data[i].dateOut == null) {
 
-        const dateInMs = new Date(data[i].dataEntrada).getTime()
+        const dateInMs = new Date(data[i].dateIn).getTime()
         const dateNowMs = new Date().getTime()
 
         const msOneDay = 1000 * 60 * 60 * 24
@@ -114,7 +114,7 @@ export class ListHotelGuestsComponent implements OnInit {
         var count = 0
         var dayWeek = 0
 
-        var dateInStart = new Date(data[i].dataEntrada);
+        var dateInStart = new Date(data[i].dateIn);
 
         dayWeek = dateInStart.getDay()
 
@@ -139,8 +139,8 @@ export class ListHotelGuestsComponent implements OnInit {
 
         // Diferenca de dias
 
-        const dateInMs = new Date(data[i].dataEntrada).getTime()
-        const dateOutMs = new Date(data[i].dataSaida).getTime()
+        const dateInMs = new Date(data[i].dateIn).getTime()
+        const dateOutMs = new Date(data[i].dateOut).getTime()
 
         const msOneDay = 1000 * 60 * 60 * 24
         this.totalDays.push(Math.round((dateOutMs - dateInMs)/msOneDay))
@@ -150,7 +150,7 @@ export class ListHotelGuestsComponent implements OnInit {
         var count = 0
         var dayWeek = 0
 
-        var dateInStart = new Date(data[i].dataEntrada);
+        var dateInStart = new Date(data[i].dateIn);
 
         dayWeek = dateInStart.getDay()
 
@@ -158,7 +158,7 @@ export class ListHotelGuestsComponent implements OnInit {
           count++;
         }
 
-        while (dateInStart < new Date(data[i].dataSaida)) {
+        while (dateInStart < new Date(data[i].dateOut)) {
           dateInStart.setDate(dateInStart.getDate() + 1)
 
           dayWeek = dateInStart.getDay()
@@ -201,7 +201,7 @@ export class ListHotelGuestsComponent implements OnInit {
     
       // Extras veículo e horário
 
-      if (data[i].adicionalVeiculo) {
+      if (data[i].plusCar) {
 
         valuePlusCarWeek = (this.totalDays[i] - this.countDayWeekends[i]) * this.plusCarWeek
         valuePlusCarWeekend = this.countDayWeekends[i] * this.plusCarWeekend
@@ -209,12 +209,12 @@ export class ListHotelGuestsComponent implements OnInit {
 
       }
 
-      if (new Date(data[i].dataSaida).getHours() >= 16) {
+      if (new Date(data[i].dateOut).getHours() >= 16) {
 
-        if ((new Date(data[i].dataSaida).getHours() == 16 && new Date(data[i].dataSaida).getMinutes() > 30)
-        || new Date(data[i].dataSaida).getHours() > 16) {
+        if ((new Date(data[i].dateOut).getHours() == 16 && new Date(data[i].dateOut).getMinutes() > 30)
+        || new Date(data[i].dateOut).getHours() > 16) {
 
-          if (new Date(data[i].dataSaida).getDay() == 0 || new Date(data[i].dataSaida).getDay() == 6) {
+          if (new Date(data[i].dateOut).getDay() == 0 || new Date(data[i].dateOut).getDay() == 6) {
             valuePlusHour = this.weekendDayValue
           } else {
             valuePlusHour = this.weekDayValue
@@ -227,7 +227,7 @@ export class ListHotelGuestsComponent implements OnInit {
 
     this.valuesTotal.push(valueTotal)
 
-    this.arrayIds.push(data[i].hospede.id)
+    this.arrayIds.push(data[i].guest.id)
 
   }
 
@@ -273,7 +273,7 @@ export class ListHotelGuestsComponent implements OnInit {
 
                 var jsonParse = JSON.parse(this.newArrayGuests[j])
 
-                if (jsonParse.documento == this.checkIn[i].hospede.documento && (this.checkIn[i].dataSaida == "" || this.checkIn[i].dataSaida == null)) {
+                if (jsonParse.documento == this.checkIn[i].guest.document && (this.checkIn[i].dateOut == "" || this.checkIn[i].dateOut == null)) {
                   this.dataList.push({ name: jsonParse.nome, document: jsonParse.documento, value: this.newArrayValues[j] })
                 }                
               }
@@ -315,7 +315,7 @@ export class ListHotelGuestsComponent implements OnInit {
 
               var jsonParse = JSON.parse(this.newArrayGuests[j])
 
-              if (jsonParse.documento == this.checkIn[i].hospede.documento && (this.checkIn[i].dataSaida !== "" && this.checkIn[i].dataSaida !== null)) {
+              if (jsonParse.documento == this.checkIn[i].guest.document && (this.checkIn[i].dateOut !== "" && this.checkIn[i].dateOut !== null)) {
                 this.dataList.push({ name: jsonParse.nome, document: jsonParse.documento, value: this.newArrayValues[j] })
               }
 
@@ -346,15 +346,16 @@ export class ListHotelGuestsComponent implements OnInit {
 
     this.hotelService.getCheckinList().subscribe(allCheckin => {
       for (var i = 0; i < allCheckin.length; i++) {
-        if (allCheckin[i].hospede.nome == name && allCheckin[i].hospede.documento == document) {
+        if (allCheckin[i].guest.name == name && allCheckin[i].guest.document == document) {
           this.hotelService.deleteCheckin(allCheckin[i].id).subscribe(deleteCheckin => {
             console.log(deleteCheckin);
 
             this.hotelService.getGuestsList().subscribe(allGuests => {
 
               for (var i = 0; i < allGuests.length; i++) {
-                if (allGuests[i].nome == name && allGuests[i].documento == document) {
+                if (allGuests[i].name == name && allGuests[i].document == document) {
                   this.hotelService.deleteGuest(allGuests[i].id).subscribe(deleteGuest => {
+                    
                     console.log(deleteGuest)
 
                     window.location.reload()

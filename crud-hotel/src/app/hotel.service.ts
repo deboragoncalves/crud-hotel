@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs';
 import { Checkin } from './models/checkin/checkin';
-import { Hospede } from './models/person/hospede';
+import { Guest } from './models/guest/guest';
 
 @Injectable({
   providedIn: 'root'
@@ -17,12 +17,12 @@ export class HotelService {
     return this.httpClient.get<Checkin[]>(this.baseUrl + "checkin");
   }
 
-  getGuestsList(): Observable<Hospede[]> {
-    return this.httpClient.get<Hospede[]>(this.baseUrl + "guests");
+  getGuestsList(): Observable<Guest[]> {
+    return this.httpClient.get<Guest[]>(this.baseUrl + "guests");
   }
 
-  getGuestById(id: number): Observable<Hospede> {
-    return this.httpClient.get<Hospede>(this.baseUrl + "guests/" + id)
+  getGuestById(id: number): Observable<Guest> {
+    return this.httpClient.get<Guest>(this.baseUrl + "guests/" + id)
   }
 
   getCheckinById(id: number): Observable<Checkin> {
@@ -33,12 +33,12 @@ export class HotelService {
     return this.httpClient.post<Checkin>(this.baseUrl + "checkin/post", checkin);
   }
 
-  createGuest(guest: Hospede): Observable<Hospede> {
-    return this.httpClient.post<Hospede>(this.baseUrl + "guests/post", guest);
+  createGuest(guest: Guest): Observable<Guest> {
+    return this.httpClient.post<Guest>(this.baseUrl + "guest", guest);
   }
 
-  updateGuest(id: number, guest: Hospede): Observable<Hospede> {
-    return this.httpClient.put<Hospede>(this.baseUrl + "guest/" + id, guest);
+  updateGuest(id: number, guest: Guest): Observable<Guest> {
+    return this.httpClient.put<Guest>(this.baseUrl + "guest/" + id, guest);
   }
 
   updateCheckin(id: number, checkin: Checkin): Observable<Checkin> {

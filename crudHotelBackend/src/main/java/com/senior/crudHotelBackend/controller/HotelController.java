@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.senior.crudHotelBackend.model.Checkin;
-import com.senior.crudHotelBackend.model.Hospede;
+import com.senior.crudHotelBackend.model.Guest;
 import com.senior.crudHotelBackend.repository.CheckinRepository;
-import com.senior.crudHotelBackend.repository.HospedeRepository;
+import com.senior.crudHotelBackend.repository.GuestRepository;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -25,7 +25,7 @@ import com.senior.crudHotelBackend.repository.HospedeRepository;
 public class HotelController {
 	
 	@Autowired
-	private HospedeRepository hospedeRepository;
+	private GuestRepository guestRepository;
 	
 	@Autowired
 	private CheckinRepository checkinRepository;
@@ -33,8 +33,8 @@ public class HotelController {
 	// Get
 	
 	@GetMapping("/guests")
-	public List<Hospede> getAllGuests() {
-		return hospedeRepository.findAll();
+	public List<Guest> getAllGuests() {
+		return guestRepository.findAll();
 	}
 	
 	@GetMapping("/checkin")
@@ -43,14 +43,14 @@ public class HotelController {
 	}
 	
 	@GetMapping("/guests/{id}")
-	public ResponseEntity<Hospede> getGuestsById(@PathVariable Long id, Hospede guestFind) {
-		Hospede guest = hospedeRepository.findById(id).orElse(null);
+	public ResponseEntity<Guest> getGuestsById(@PathVariable Long id, Guest guestFind) {
+		Guest guest = guestRepository.findById(id).orElse(null);
 		
 		if (guest == null) {
 			return ResponseEntity.notFound().build();
 		}
 		
-		Hospede getGuest = hospedeRepository.save(guest);
+		Guest getGuest = guestRepository.save(guest);
 		
 		return ResponseEntity.ok(getGuest);
 	}
@@ -70,9 +70,9 @@ public class HotelController {
 
 	// Post
 	
-	@PostMapping("/guests/post")
-	public Hospede createGuest(@RequestBody Hospede hospede) {
-		return hospedeRepository.save(hospede);
+	@PostMapping(value="/guest")
+	public Guest createGuest(@RequestBody Guest guest) {
+		return guestRepository.save(guest);
 	}
 	
 	@PostMapping(value="/checkin/post")
@@ -92,9 +92,9 @@ public class HotelController {
 		}
 		
 		checkin.setId(checkinUpdate.getId());
-		checkin.setAdicionalVeiculo(checkinUpdate.isAdicionalVeiculo());
-		checkin.setDataEntrada(checkinUpdate.getDataEntrada());
-		checkin.setDataSaida(checkinUpdate.getDataSaida());
+		checkin.setPlusCar(checkinUpdate.getPlusCar());
+		checkin.setDateIn(checkinUpdate.getDateIn());
+		checkin.setDateOut(checkinUpdate.getDateOut());
 		
 		Checkin newCheckinUpdate = checkinRepository.save(checkin);
 		return ResponseEntity.ok(newCheckinUpdate);
@@ -102,19 +102,19 @@ public class HotelController {
 	}
 	
 	@PutMapping(value="/guest/{id}")
-	public ResponseEntity<Hospede> updateGuest(@PathVariable Long id, @RequestBody Hospede guestUpdate) {
-		Hospede guest = hospedeRepository.findById(id).orElse(null);
+	public ResponseEntity<Guest> updateGuest(@PathVariable Long id, @RequestBody Guest guestUpdate) {
+		Guest guest = guestRepository.findById(id).orElse(null);
 		
 		if (guest == null) {
 			return ResponseEntity.notFound().build();
 		}
 		
 		guest.setId(guestUpdate.getId());
-		guest.setNome(guestUpdate.getNome());
-		guest.setDocumento(guestUpdate.getDocumento());
-		guest.setTelefone(guestUpdate.getTelefone());
+		guest.setName(guestUpdate.getName());
+		guest.setDocument(guestUpdate.getDocument());
+		guest.setPhone(guestUpdate.getPhone());
 		
-		Hospede newGuestUpdate = hospedeRepository.save(guest);
+		Guest newGuestUpdate = guestRepository.save(guest);
 		return ResponseEntity.ok(newGuestUpdate);
 				
 	}
@@ -122,9 +122,9 @@ public class HotelController {
 	// Delete
 	
 	@DeleteMapping("/delete/guest/{id}")
-	public List<Hospede> deleteGuest(@PathVariable Long id) {
-		this.hospedeRepository.deleteById(id);
-		return this.hospedeRepository.findAll();
+	public List<Guest> deleteGuest(@PathVariable Long id) {
+		this.guestRepository.deleteById(id);
+		return this.guestRepository.findAll();
 	}
 	
 	@DeleteMapping("/delete/checkin/{id}")

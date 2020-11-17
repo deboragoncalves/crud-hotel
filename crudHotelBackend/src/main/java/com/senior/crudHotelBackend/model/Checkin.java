@@ -18,63 +18,63 @@ public class Checkin {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id_checkin")
-	private Long id;
+	private Long idCheckin;
 	
-	@Column(name="data_entrada")
-	private String dataEntrada;
+	@Column(name="date_in")
+	private String dateIn;
 	
-	@Column(name="data_saida")
-	private String dataSaida;
+	@Column(name="date_out")
+	private String dateOut;
 	
-	@Column(name="adicional_veiculo")
-	private boolean adicionalVeiculo;
+	@Column(name="plus_car")
+	private boolean plusCar;
 	
-	@OneToOne(targetEntity=Hospede.class)
-	@JoinColumn(name="id_person")
-	@JsonProperty("hospede")
-	private Hospede hospede;
+	@OneToOne(targetEntity=Guest.class)
+	@JoinColumn(name="id_guest")
+	@JsonProperty("guest")
+	private Guest guest;
 	
 	public Checkin() {
 		
 	}
 	
-	public Checkin(Long id, String dataEntrada, String dataSaida, boolean adicionalVeiculo) {
-		this.id = id;
-		this.dataEntrada = dataEntrada;
-		this.dataSaida = dataSaida;
-		this.adicionalVeiculo = adicionalVeiculo;
+	public Checkin(Long idCheckin, String dateIn, String dateOut, boolean plusCar) {
+		this.idCheckin = idCheckin;
+		this.dateIn = dateIn;
+		this.dateOut = dateOut;
+		this.plusCar = plusCar;
 	}
 	
 	public Long getId() {
-		return id;
+		return this.idCheckin;
 	}
 	
-	public void setId(Long id) {
-		this.id = id;
+	public void setId(Long idCheckin) {
+		this.idCheckin = idCheckin;
 	}
 
-	public String getDataEntrada() {
-		return dataEntrada;
+	public String getDateIn() {
+		return this.dateIn;
 	}
 
-	public void setDataEntrada(String dataEntrada) {
-		this.dataEntrada = dataEntrada;
+	public void setDateIn(String dateIn) {
+		this.dateIn = dateIn;
 	}
 
-	public String getDataSaida() {
-		return dataSaida;
+	public String getDateOut() {
+		return this.dateOut;
 	}
 
-	public void setDataSaida(String dataSaida) {
-		this.dataSaida = dataSaida;
+	public void setDateOut(String dateOut) {
+		this.dateOut = dateOut;
 	}
 
-	public boolean isAdicionalVeiculo() {
-		return adicionalVeiculo;
+	public boolean getPlusCar() {
+		return this.plusCar;
 	}
 
-	public void setAdicionalVeiculo(boolean adicionalVeiculo) {
-		this.adicionalVeiculo = adicionalVeiculo;
+	public void setPlusCar(boolean plusCar) {
+		this.plusCar = plusCar;
 	}
 
 	

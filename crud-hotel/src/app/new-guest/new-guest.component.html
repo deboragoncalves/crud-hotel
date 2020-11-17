@@ -1,19 +1,19 @@
-<div class="container-person">
-    <p class="title">Hóspede</p>
+<div class="container-guest">
+    <p class="title">Novo Hóspede</p>
     <div class="container-form">
         <form (ngSubmit)="onSubmit()"> 
             <div class="container-inputs">
                 <div class="container-input">
                     <label class="labels" for="name">Nome</label>
-                    <input type="text" id="name" name="name" [(ngModel)]="hospede.nome" class="input">
+                    <input type="text" id="name" name="name" [(ngModel)]="name" class="input">
                 </div>
                 <div class="container-input">
                     <label class="labels" for="document">Documento</label>
-                    <input type="text" id="document" name="document" [(ngModel)]="hospede.documento"  class="input">
+                    <input type="text" id="document" name="document" [(ngModel)]="document"  class="input">
                 </div> 
                 <div class="container-input">
                     <label class="labels" for="phone">Telefone</label>
-                    <input type="phone" id="phone" name="phone" [(ngModel)]="hospede.telefone"  class="input">
+                    <input type="phone" id="phone" name="phone" [(ngModel)]="phone"  class="input">
                 </div> 
             </div>
             <div class="container-button">
@@ -22,3 +22,4 @@
         </form>
     </div>
 </div>
+

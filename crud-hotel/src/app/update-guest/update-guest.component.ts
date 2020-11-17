@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HotelService } from '../hotel.service';
-import { Hospede } from '../models/person/hospede';
+import { Guest } from '../models/guest/guest';
 
 @Component({
   selector: 'app-update-guest',
@@ -10,7 +10,7 @@ import { Hospede } from '../models/person/hospede';
 })
 export class UpdateGuestComponent implements OnInit {
 
-  hospede: Hospede = new Hospede();
+  guest: Guest = new Guest();
 
   guestName: string;
   guestDocument: string;
@@ -21,7 +21,7 @@ export class UpdateGuestComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  updateGuest(id: number, guest: Hospede) {
+  updateGuest(id: number, guest: Guest) {
 
     this.hotelService.updateGuest(id, guest).subscribe(data => {
 
@@ -42,21 +42,21 @@ export class UpdateGuestComponent implements OnInit {
 
       // Objeto com novos dados
 
-      this.hospede.nome = guestName
-      this.hospede.documento = guestDocument
-      this.hospede.telefone = guestPhone
+      this.guest.name = guestName
+      this.guest.document = guestDocument
+      this.guest.phone = guestPhone
 
       for (var i = 0; i < guestsList.length; i++) {
 
-        // Verificar se algum dado do hóspede (nome, documento ou telefone) é igual a um dos hóspedes que existentes na lista
+        // Verificar se algum dado do hóspede (nome, documento ou telefone) é igual a um dos hóspedes existentes na lista
 
-        if (guestsList[i].nome == this.hospede.nome || guestsList[i].documento == this.hospede.documento || guestsList[i].telefone == this.hospede.telefone) {
+        if (guestsList[i].name == this.guest.name || guestsList[i].document == this.guest.document || guestsList[i].phone == this.guest.phone) {
 
           // Atualizar hospede, passando id e Objeto
 
-          this.hospede.id = guestsList[i].id
+          this.guest.id = guestsList[i].id
 
-          this.updateGuest(this.hospede.id, this.hospede);
+          this.updateGuest(this.guest.id, this.guest);
 
         }
 

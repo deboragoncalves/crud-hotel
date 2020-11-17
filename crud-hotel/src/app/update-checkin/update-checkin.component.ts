@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HotelService } from '../hotel.service';
 import { Checkin } from '../models/checkin/checkin';
-import { Hospede } from '../models/person/hospede';
+import { Guest } from '../models/guest/guest';
 
 @Component({
   selector: 'app-update-checkin',
@@ -38,16 +38,16 @@ export class UpdateCheckinComponent implements OnInit {
     }, error => console.log(error))
   }
 
-  getCheckinById(guest: Hospede) {
+  getCheckinById(guest: Guest) {
     this.hotelService.getCheckinList().subscribe(allCheckin => {
 
       for (var i = 0; i < allCheckin.length; i++) {
-        if (allCheckin[i].hospede.documento == guest.documento) {
+        if (allCheckin[i].guest.document == guest.document) {
 
           this.checkin.id = allCheckin[i].id
-          this.checkin.hospede = guest
-          this.checkin.dataEntrada = this.dateIn
-          this.checkin.dataSaida = this.dateOut
+          this.checkin.guest = guest
+          this.checkin.dateIn = this.dateIn
+          this.checkin.dateOut = this.dateOut
 
           this.updateCheckin(allCheckin[i].id, this.checkin);
  
@@ -63,7 +63,7 @@ export class UpdateCheckinComponent implements OnInit {
       for (var i = 0; i < allGuests.length; i++) {
         this.hotelService.getGuestById(allGuests[i].id).subscribe(guest => {
 
-          if (guest.documento == dataGuest || guest.nome == dataGuest || guest.telefone == dataGuest) {
+          if (guest.document == dataGuest || guest.name == dataGuest || guest.phone == dataGuest) {
             this.getCheckinById(guest);
           }
 
@@ -84,8 +84,10 @@ export class UpdateCheckinComponent implements OnInit {
       this.getGuestById(this.dataGuest)
 
     } else {
+
       alert("O campo Documento é obrigatório")
       return;
+
     }
     
   }

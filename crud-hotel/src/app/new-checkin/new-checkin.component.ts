@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HotelService } from '../hotel.service';
 import { Checkin } from '../models/checkin/checkin';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-new-checkin',
@@ -18,7 +19,7 @@ export class NewCheckinComponent implements OnInit {
   dateOut: string;
   plusCar: boolean;
 
-  constructor(private hotelService: HotelService) { }
+  constructor(private hotelService: HotelService, private toastr: ToastrService) { }
 
   ngOnInit(): void {
   }
@@ -59,7 +60,7 @@ export class NewCheckinComponent implements OnInit {
 
           } else {
 
-            alert("Este hóspede não está incluído no sistema. Faça o cadastro do mesmo e, depois, o checkin.");
+            this.toastr.warning("Este hóspede não está incluído no sistema. Faça o cadastro do mesmo e, depois, o checkin.");
             return; 
 
           }
@@ -83,7 +84,7 @@ export class NewCheckinComponent implements OnInit {
 
     } else {
 
-      alert("O campo Documento é obrigatório")
+      this.toastr.warning("O campo Hóspede é obrigatório")
       return;
       
     }

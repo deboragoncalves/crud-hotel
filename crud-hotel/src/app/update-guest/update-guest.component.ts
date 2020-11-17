@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HotelService } from '../hotel.service';
 import { Guest } from '../models/guest/guest';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-update-guest',
@@ -16,7 +17,7 @@ export class UpdateGuestComponent implements OnInit {
   guestDocument: string;
   guestPhone: string;
 
-  constructor(private hotelService: HotelService, private router: Router) { }
+  constructor(private hotelService: HotelService, private router: Router, private toastr: ToastrService) { }
 
   ngOnInit(): void {
   }
@@ -79,21 +80,21 @@ export class UpdateGuestComponent implements OnInit {
 
         } else {
 
-          alert("O campo Telefone é obrigatório")
+          this.toastr.warning("O campo Telefone é obrigatório");
           return;
 
         }
   
       } else {
 
-        alert("O campo Documento é obrigatório")
+        this.toastr.warning("O campo Documento é obrigatório");
         return;
 
       }
 
     } else {
 
-      alert("O campo Nome é obrigatório")
+      this.toastr.warning("O campo Nome é obrigatório");
       return;
       
     }

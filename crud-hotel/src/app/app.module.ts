@@ -12,6 +12,8 @@ import { UpdateCheckinComponent } from './update-checkin/update-checkin.componen
 import { HomeComponent } from './home/home.component';
 import { UpdateGuestComponent } from './update-guest/update-guest.component';
 import { NewGuestComponent } from './new-guest/new-guest.component';
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,9 @@ import { NewGuestComponent } from './new-guest/new-guest.component';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { HotelService } from '../hotel.service';
 import { Guest } from '../models/guest/guest';
 import { ToastrService } from 'ngx-toastr';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-new-guest',
@@ -12,12 +13,15 @@ import { ToastrService } from 'ngx-toastr';
 
 export class NewGuestComponent implements OnInit {
 
+  documentInput = new FormControl('');
+  phoneInput = new FormControl('');
+
   guest: Guest = new Guest();
 
   id: number;
   name: string;
-  document: string;
-  phone: string;
+  guestDocument: string;
+  guestPhone: string;
 
   constructor(private hotelService: HotelService, private router: Router, private toastr: ToastrService) { }
 
@@ -46,26 +50,26 @@ export class NewGuestComponent implements OnInit {
 
   onSubmit() {
 
-    // Validação
+    // Validação conforme masks
 
     if (this.name != "" && this.name != undefined) {
 
-      if (this.document != "" && this.document != undefined) {
+      if (this.documentInput.valid) {
 
-        if (this.phone != "" && this.phone != undefined) {
+        if (this.phoneInput.valid) {
 
-          this.createGuest(this.name, this.document, this.phone);
+          this.createGuest(this.name, this.guestDocument, this.guestPhone);
 
         } else {
   
-          this.toastr.warning("O campo Telefone é obrigatório.")
+          this.toastr.warning("O campo Telefone é obrigatório e deve ter o formato: (00) 00000-0000.")
           return;
   
         }
 
       } else {
 
-        this.toastr.warning("O campo Documento é obrigatório.")
+        this.toastr.warning("O campo Documento é obrigatório e deve ter 7 dígitos.")
         return;
 
       }

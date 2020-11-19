@@ -8,12 +8,12 @@
                     <input type="text" id="name" placeholder="Nome" name="name" [(ngModel)]="name" class="input" required>
                 </div>
                 <div class="container-input">
-                    <label class="labels" for="document">Documento</label>
-                    <input type="text" id="document" placeholder="Documento" name="document" [(ngModel)]="document"  class="input" required>
+                    <label class="labels" for="document">Documento de identidade</label>
+                    <input type="text" id="document" name="document" [(ngModel)]="guestDocument" class="input" placeholder="Identidade" mask="0000000" [validation]="true" [formControl]="documentInput" required>
                 </div> 
                 <div class="container-input">
                     <label class="labels" for="phone">Telefone</label>
-                    <input type="phone" id="phone" placeholder="Telefone" name="phone" [(ngModel)]="phone"  class="input" required>
+                    <input type="phone" id="phone" name="phone" [(ngModel)]="guestPhone" class="input" placeholder="Telefone" mask="(00) 00000-0000" [validation]="true" [formControl]="phoneInput" required>
                 </div> 
             </div>
             <div class="container-button">

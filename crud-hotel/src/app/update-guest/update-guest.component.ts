@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { HotelService } from '../hotel.service';
 import { Guest } from '../models/guest/guest';
 import { ToastrService } from 'ngx-toastr';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-update-guest',
@@ -10,6 +11,9 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./update-guest.component.sass']
 })
 export class UpdateGuestComponent implements OnInit {
+
+  documentInput = new FormControl('');
+  phoneInput = new FormControl('');
 
   guest: Guest = new Guest();
 
@@ -68,26 +72,26 @@ export class UpdateGuestComponent implements OnInit {
 
   onSubmit() {
 
-    // Validação
+    // Validação conforme masks
 
     if ((this.guestName != undefined && this.guestName != "")) {
 
-      if ((this.guestDocument != undefined && this.guestDocument != "")) {
+      if (this.documentInput.valid) {
 
-        if ((this.guestPhone != undefined && this.guestPhone != "")) {
+        if (this.phoneInput.valid) {
 
           this.getNewGuest(this.guestName, this.guestDocument, this.guestPhone);
 
         } else {
 
-          this.toastr.warning("O campo Telefone é obrigatório");
+          this.toastr.warning("O campo Telefone é obrigatório e deve ter o formato: (00) 00000-0000.")
           return;
 
         }
   
       } else {
 
-        this.toastr.warning("O campo Documento é obrigatório");
+        this.toastr.warning("O campo Documento é obrigatório e deve ter 7 dígitos.");
         return;
 
       }

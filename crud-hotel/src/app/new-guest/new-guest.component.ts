@@ -48,11 +48,11 @@ export class NewGuestComponent implements OnInit {
 
     // Validação
 
-    if (this.name != "" || this.name != undefined) {
+    if (this.name != "" && this.name != undefined) {
 
-      if (this.document != "" || this.document != undefined) {
+      if (this.document != "" && this.document != undefined) {
 
-        if (this.phone != "" || this.phone != undefined) {
+        if (this.phone != "" && this.phone != undefined) {
 
           this.createGuest(this.name, this.document, this.phone);
 

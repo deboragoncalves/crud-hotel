@@ -80,15 +80,57 @@ export class UpdateCheckinComponent implements OnInit {
       this.plusCar = false
     }
 
-    if ((this.dataGuest != undefined && this.dataGuest != "")) {
+    if (this.dataGuest != undefined && this.dataGuest != "") {
 
-      this.getGuestById(this.dataGuest)
+      if (this.dateIn != undefined && this.dateIn != "") {
+
+        if (this.dateOut == undefined || this.dateOut == "") {
+
+          // Data de saida vazia, prosseguir
+
+          this.getGuestById(this.dataGuest)
+
+        } else {
+
+          var dateOut = new Date(this.dateOut)
+          var dateIn = new Date(this.dateIn)
+
+          // Data de saida maior/menor que entrada 
+
+          if (dateOut.getDate() > dateIn.getDate()) {
+
+            this.getGuestById(this.dataGuest)
+
+          } else if ((dateOut.getDate() == dateIn.getDate()) && (dateOut.getHours() > dateIn.getHours())) {
+
+            this.getGuestById(this.dataGuest)
+
+          } else if ((dateOut.getDate() == dateIn.getDate()) && (dateOut.getHours() < dateIn.getHours())) {
+
+            this.toastr.warning("A hora de saída deve ser maior que a hora de entrada")
+            return;
+            
+          } else if (dateOut.getDate() < dateIn.getDate()) {
+
+            this.toastr.warning("A data de saída deve ser maior que a data de entrada")
+            return;
+
+          }
+
+        }
+
+      } else {
+
+        this.toastr.warning("O campo Data/hora de Entrada é obrigatório")
+        return;
+
+      }
 
     } else {
 
       this.toastr.warning("O campo Hóspede é obrigatório")
       return;
-
+      
     }
     
   }

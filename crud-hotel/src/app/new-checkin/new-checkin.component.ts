@@ -35,7 +35,7 @@ export class NewCheckinComponent implements OnInit {
     }, error => console.log(error))
   }
 
-  getGuestById(dataGuest: string) {
+  getGuestById(dataGuest: string, dateIn: string) {
   
     this.hotelService.getGuestsList().subscribe(allGuests => {
 
@@ -52,35 +52,76 @@ export class NewCheckinComponent implements OnInit {
             // Novo objeto 
 
             this.checkin.plusCar = this.plusCar
-            this.checkin.dateIn = this.dateIn
+            this.checkin.dateIn = dateIn
             this.checkin.dateOut = this.dateOut
             this.checkin.guest = guest
 
             this.createCheckin(this.checkin)
 
-          } else {
+            return;
 
-            this.toastr.warning("Este hóspede não está incluído no sistema. Faça o cadastro do mesmo e, depois, o checkin.");
-            return; 
-
-          }
+          } 
 
         }, error => console.log(error))
       }
-  
+
     }, error => console.log(error))
   }
 
   onSubmit() {
+
+    // Definir default - adicional veiculo
 
     if (this.plusCar == undefined) {
 
       this.plusCar = false
     }
 
-    if ((this.dataGuest != undefined && this.dataGuest != "")) {
+    if (this.dataGuest != undefined && this.dataGuest != "") {
 
-      this.getGuestById(this.dataGuest)
+      if (this.dateIn != undefined && this.dateIn != "") {
+
+        if (this.dateOut == undefined || this.dateOut == "") {
+
+          // Data de saida vazia, prosseguir
+
+          this.getGuestById(this.dataGuest, this.dateIn)
+
+        } else {
+
+          var dateOut = new Date(this.dateOut)
+          var dateIn = new Date(this.dateIn)
+
+          // Data de saida maior/menor que entrada 
+
+          if (dateOut.getDate() > dateIn.getDate()) {
+
+            this.getGuestById(this.dataGuest, this.dateIn)
+
+          } else if ((dateOut.getDate() == dateIn.getDate()) && (dateOut.getHours() > dateIn.getHours())) {
+
+            this.getGuestById(this.dataGuest, this.dateIn)
+
+          } else if ((dateOut.getDate() == dateIn.getDate()) && (dateOut.getHours() < dateIn.getHours())) {
+
+            this.toastr.warning("A hora de saída deve ser maior que a hora de entrada")
+            return;
+            
+          } else if (dateOut.getDate() < dateIn.getDate()) {
+
+            this.toastr.warning("A data de saída deve ser maior que a data de entrada")
+            return;
+
+          }
+
+        }
+
+      } else {
+
+        this.toastr.warning("O campo Data/hora de Entrada é obrigatório")
+        return;
+
+      }
 
     } else {
 

@@ -4,11 +4,11 @@
     <div class="container-filter">
         <div class="container-input">
             <input type="radio" id="present" name="present" [(ngModel)]="present" (change)="changeIsPresent($event)" class="input">
-            <label class="labels" for="present">Pessoas ainda presentes</label>
+            <label class="labels" for="present">Hóspedes presentes</label>
         </div>
         <div class="container-input">
             <input type="radio" id="not-present" name="not-present" [(ngModel)]="notPresent" (change)="changeNotPresent($event)" class="input not-present"> 
-            <label class="labels" for="not-present">Pessoas que já deixaram o hotel</label>
+            <label class="labels" for="not-present">Hóspedes ausentes</label>
         </div>
     </div>
     <div class="container-table">

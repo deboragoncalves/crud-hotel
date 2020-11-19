@@ -5,15 +5,15 @@
             <div class="container-inputs">
                 <div class="container-input">
                     <label class="labels" for="name">Nome</label>
-                    <input type="text" id="name" name="name" [(ngModel)]="guestName" class="input">
+                    <input type="text" id="name" placeholder="Nome" name="name" [(ngModel)]="guestName" class="input" required>
                 </div>
                 <div class="container-input">
                     <label class="labels" for="document">Documento</label>
-                    <input type="text" id="document" name="document" [(ngModel)]="guestDocument"  class="input">
+                    <input type="text" id="document" placeholder="Documento" name="document" [(ngModel)]="guestDocument" class="input" required>
                 </div> 
                 <div class="container-input">
                     <label class="labels" for="phone">Telefone</label>
-                    <input type="phone" id="phone" name="phone" [(ngModel)]="guestPhone"  class="input">
+                    <input type="phone" id="phone" placeholder="Telefone" name="phone" [(ngModel)]="guestPhone" class="input" required>
                 </div> 
             </div>
             <div class="container-button">

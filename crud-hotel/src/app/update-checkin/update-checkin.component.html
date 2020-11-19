@@ -5,7 +5,7 @@
             <div class="container-inputs">
                 <div class="container-input">
                     <label class="labels" for="date-in">Data/hora de entrada</label>
-                    <input type="datetime-local" id="date-in" name="inputDateIn" [(ngModel)]="dateIn" class="input">
+                    <input type="datetime-local" id="date-in" name="inputDateIn" [(ngModel)]="dateIn" class="input" required>
                 </div>
                 <div class="container-input">
                     <label class="labels" for="date-out">Data/hora de saída</label>
@@ -15,7 +15,7 @@
             <div class="container-inputs">
                 <div class="container-input">
                     <label class="labels" for="guest">Hóspede</label>
-                    <input type="text" id="guest" name="inputGuest" placeholder="Documento, nome ou telefone" [(ngModel)]="dataGuest" class="input">
+                    <input type="text" id="guest" name="inputGuest" placeholder="Documento, nome ou telefone" [(ngModel)]="dataGuest" class="input" required>
                 </div>
                 <div class="container-checkbox">
                     <input type="checkbox" id="car" name="inputCar" [(ngModel)]="plusCar" class="input-checkbox"> 

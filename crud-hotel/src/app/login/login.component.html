@@ -5,15 +5,19 @@
             <div class="container-inputs">
                 <div class="container-input">
                     <label class="labels" for="email">Email</label>
-                    <input type="text" id="email" placeholder="Email" mask="email@email.com" [validation]="true" [formControl]="emailInput" name="email" [(ngModel)]="email" class="input" required>
+                    <input type="text" id="email" placeholder="Email" name="email" [(ngModel)]="email" class="input" email required>
                 </div>
                 <div class="container-input">
                     <label class="labels" for="password">Senha</label>
-                    <input type="password" id="password" name="password" [(ngModel)]="password" class="input" placeholder="Senha" mask="Passwo1" [validation]="true" [formControl]="passwordInput" required>
+                    <div class="input-password">
+                        <show-hide-password size="lg" btnStyle="primary">
+                            <input type="password" id="password" name="password" minlength="6" maxlength="15" [(ngModel)]="password" class="input" placeholder="Senha" required>
+                        </show-hide-password>
+                    </div>
                 </div> 
             </div>
             <div class="container-button">
-                <button>Salvar</button>
+                <button>Entrar</button>
             </div>
         </form>
     </div>

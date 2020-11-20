@@ -16,6 +16,7 @@ import { NewGuestComponent } from './new-guest/new-guest.component';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginComponent } from './login/login.component';
+import { ShowHidePasswordModule } from 'ngx-show-hide-password';
 
 export const options: Partial<IConfig> | (() => Partial<IConfig>) = null;
 
@@ -39,7 +40,8 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = null;
     NgxPaginationModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
-    NgxMaskModule.forRoot()
+    NgxMaskModule.forRoot(),
+    ShowHidePasswordModule
   ],
   providers: [],
   bootstrap: [AppComponent]

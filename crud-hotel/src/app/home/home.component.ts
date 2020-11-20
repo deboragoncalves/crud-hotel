@@ -6,13 +6,14 @@ import { Router } from '@angular/router';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.sass']
 })
+
 export class HomeComponent implements OnInit {
 
   constructor(private router: Router) { }
 
   ngOnInit(): void {
 
-    if (!localStorage.getItem('email') && !localStorage.getItem('password')) {
+    if (localStorage.getItem('email') == null && localStorage.getItem('password') == null) {
 
       // Login
 

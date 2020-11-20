@@ -8,10 +8,8 @@ import { FormControl } from '@angular/forms';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.sass']
 })
-export class LoginComponent implements OnInit {
 
-  emailInput = new FormControl('');
-  passwordInput = new FormControl('');
+export class LoginComponent implements OnInit {
 
   email: string;
   password: string;
@@ -25,15 +23,14 @@ export class LoginComponent implements OnInit {
       // Home
 
       this.router.navigate([''])
-      
     } 
   }
   
   validateData() {
 
-    if (this.emailInput.valid) {
+    if (this.email.includes("@") && this.email.includes(".com")) {
 
-      if (this.passwordInput.valid) {
+      if (this.password.length > 7 && this.password.length < 16) {
 
         // Local Storage
 
@@ -47,14 +44,14 @@ export class LoginComponent implements OnInit {
 
       } else {
   
-        this.toastr.warning("O campo Senha é obrigatório e deve conter 5 letras, sendo 1 maiúscula, e 1 número.")
+        this.toastr.warning("O campo Senha é obrigatório e deve conter, no mínimo, 6 caracteres e, no máximo, 15 caracteres.")
         return;
   
       }
 
     } else {
 
-      this.toastr.warning("O campo Email é obrigatório e deve ter o formato: email@email.com.")
+      this.toastr.warning("O campo Email é obrigatório e deve conter os seguintes elementos: '@' e '.com'.")
       return;
 
     }

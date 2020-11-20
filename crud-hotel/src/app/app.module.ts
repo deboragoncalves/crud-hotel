@@ -15,6 +15,7 @@ import { UpdateGuestComponent } from './update-guest/update-guest.component';
 import { NewGuestComponent } from './new-guest/new-guest.component';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { LoginComponent } from './login/login.component';
 
 export const options: Partial<IConfig> | (() => Partial<IConfig>) = null;
 
@@ -26,7 +27,8 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = null;
     UpdateCheckinComponent,
     HomeComponent,
     UpdateGuestComponent,
-    NewGuestComponent
+    NewGuestComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

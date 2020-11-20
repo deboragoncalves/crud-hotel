@@ -47,11 +47,10 @@ export class NewGuestComponent implements OnInit {
     }, error => console.log(error))
 
   }
+  
+  validateData() {
 
-  onSubmit() {
-
-    // Validação conforme masks
-
+    
     if (this.name != "" && this.name != undefined) {
 
       if (this.documentInput.valid) {
@@ -80,6 +79,14 @@ export class NewGuestComponent implements OnInit {
       return;
 
     }
+    
+  }
+
+  onSubmit() {
+
+    // Validação conforme masks
+
+    this.validateData();
 
   }
 

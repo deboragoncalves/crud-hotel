@@ -74,12 +74,8 @@ export class UpdateCheckinComponent implements OnInit {
     }, error => console.log(error))
   }
 
-  onSubmit() {
-
-    if (this.plusCar == undefined) {
-      this.plusCar = false
-    }
-
+  validateData() {
+    
     if (this.dataGuest != undefined && this.dataGuest != "") {
 
       if (this.dateIn != undefined && this.dateIn != "") {
@@ -132,6 +128,15 @@ export class UpdateCheckinComponent implements OnInit {
       return;
       
     }
+  }
+
+  onSubmit() {
+
+    if (this.plusCar == undefined) {
+      this.plusCar = false
+    }
+
+    this.validateData();
     
   }
 }

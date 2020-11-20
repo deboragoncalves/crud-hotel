@@ -39,7 +39,7 @@ export class UpdateGuestComponent implements OnInit {
     }, error => console.log(error))
   }
 
-  getNewGuest(guestName: string, guestDocument: string, guestPhone: string) {
+  dataNewGuest(guestName: string, guestDocument: string, guestPhone: string) {
 
     // Listar hospedes
 
@@ -70,9 +70,7 @@ export class UpdateGuestComponent implements OnInit {
     }, error => console.log(error))
   }
 
-  onSubmit() {
-
-    // Validação conforme masks
+  validateData() {
 
     if ((this.guestName != undefined && this.guestName != "")) {
 
@@ -80,7 +78,7 @@ export class UpdateGuestComponent implements OnInit {
 
         if (this.phoneInput.valid) {
 
-          this.getNewGuest(this.guestName, this.guestDocument, this.guestPhone);
+          this.dataNewGuest(this.guestName, this.guestDocument, this.guestPhone);
 
         } else {
 
@@ -102,6 +100,15 @@ export class UpdateGuestComponent implements OnInit {
       return;
       
     }
+
+  }
+
+  onSubmit() {
+
+    // Validação conforme masks
+
+    this.validateData();
+
   }
 
 }

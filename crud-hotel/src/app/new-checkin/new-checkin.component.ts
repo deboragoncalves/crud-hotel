@@ -68,14 +68,7 @@ export class NewCheckinComponent implements OnInit {
     }, error => console.log(error))
   }
 
-  onSubmit() {
-
-    // Definir default - adicional veiculo
-
-    if (this.plusCar == undefined) {
-
-      this.plusCar = false
-    }
+  validateData() {
 
     if (this.dataGuest != undefined && this.dataGuest != "") {
 
@@ -131,6 +124,19 @@ export class NewCheckinComponent implements OnInit {
       return;
       
     }
+    
+  }
+
+  onSubmit() {
+
+    // Definir default - adicional veiculo
+
+    if (this.plusCar == undefined) {
+
+      this.plusCar = false
+    }
+
+    this.validateData();
     
   }
 }

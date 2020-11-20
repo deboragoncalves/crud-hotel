@@ -225,7 +225,11 @@ export class ListHotelGuestsComponent implements OnInit {
 
     valueTotal = valueTotalDays + valuePlusCarTotal + valuePlusHour
 
-    this.valuesTotal.push(valueTotal)
+    // 2 casas decimais: toFixed
+
+    var valueTotalFormat = parseFloat(valueTotal.toString()).toFixed(2)
+
+    this.valuesTotal.push(valueTotalFormat)
 
     this.arrayIds.push(data[i].guest.id)
 

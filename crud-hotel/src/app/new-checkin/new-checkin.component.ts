@@ -83,7 +83,9 @@ export class NewCheckinComponent implements OnInit {
 
         if (this.dateOut == undefined || this.dateOut == "") {
 
-          // Data de saida vazia, prosseguir
+          // Data de saida vazia
+          
+          // TODO: Data de entrada - formato ISO String: yyyy-mm-ddThh:mm:ss
 
           this.getGuestById(this.dataGuest, this.dateIn)
 

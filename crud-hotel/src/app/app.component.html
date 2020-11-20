@@ -1,6 +1,14 @@
+<!-- Navbar -->
+
 <nav class="navbar">
     <img class="logo" src="assets/logoSenior.png">
-    <i class="fa fa-bars fa-2x"></i>
+    <i class="fa fa-bars fa-2x" (click)="toggleMenu()"></i>
+</nav>
+
+<!-- Sidebar -->
+
+<nav class="sidebar" *ngIf="showSidebar">
+    <a (click)="goToLogin()">Logout</a>
 </nav>
 
 <router-outlet></router-outlet>

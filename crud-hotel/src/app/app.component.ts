@@ -8,5 +8,23 @@ import { Router } from '@angular/router';
 })
 
 export class AppComponent {
+  public showSidebar = false;
+
+  constructor(private router: Router) { }
+
   title = 'crud-hotel';
+
+  toggleMenu() {
+    this.showSidebar = !this.showSidebar
+  }
+
+  goToLogin() {
+
+    localStorage.clear()
+
+    // Login
+
+    this.router.navigate(['login'])
+
+  }
 }
